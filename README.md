@@ -1,4 +1,4 @@
-# Task-Management-App
+# Task Management App
 
 *Stack:*
 - .NET Core 3.1 - RESTful API
