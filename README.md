@@ -13,7 +13,7 @@
 
 *The app must use:*
 - ~~EF~~
-- ~~MS SQL~~ MongoDB
+- MongoDB ~~MS SQL~~
 - LINQ queries
 - JWT or another authorization without re-login every time when a tab was closed
 - UI animations
