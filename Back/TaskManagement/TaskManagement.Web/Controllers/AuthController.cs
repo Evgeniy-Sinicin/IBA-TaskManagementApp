@@ -24,28 +24,30 @@ namespace TaskManagement.Web.Controllers
         }
 
         // TODO: Accounts will be got from MongoDB
-        // TODO: Passwords will be encrypted
-        private List<Account> Accounts => new List<Account>
+        private List<Account> Accounts { get; set; } = new List<Account>
         {
             new Account()
             {
                 Id = Guid.Parse("78976017-e3bc-441b-9149-e60e0d8426b3"),
+                Phone = "+375291111111",
                 Email = "user@email.com",
-                Password = "user",
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword("user"),
                 Roles = new Role[] { Role.User }
             },
             new Account()
             {
                 Id = Guid.Parse("b896ab24-edb4-4dc7-a4ef-fe6184003f02"),
+                Phone = "+375292222222",
                 Email = "user2@email.com",
-                Password = "user2",
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword("user2"),
                 Roles = new Role[] { Role.User }
             },
             new Account()
             {
                 Id = Guid.Parse("d5c98c2d-d8fa-4949-89ec-48cbda5aab6b"),
+                Phone = "+375297757581",
                 Email = "admin@email.com",
-                Password = "admin",
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin"),
                 Roles = new Role[] { Role.Admin }
             }
         };
@@ -54,10 +56,15 @@ namespace TaskManagement.Web.Controllers
         [HttpPost]
         public IActionResult Login([FromBody] Login request)
         {
-            var user = AuthenticateUser(request.Email, request.Password);
+            var user = AuthenticateUser(request.Email);
 
             if (user != null)
             {
+                if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+                {
+                    return BadRequest("Password is wrong");
+                }
+
                 var token = GenerateJWT(user);
 
                 return Ok(new
@@ -66,12 +73,33 @@ namespace TaskManagement.Web.Controllers
                 });
             }
 
-            return Unauthorized();
+            return BadRequest("Email is unregistered");
         }
 
-        private Account AuthenticateUser(string email, string password)
+        [Route("register")]
+        [HttpPost]
+        public IActionResult Register([FromBody] Registration request)
         {
-            return Accounts.SingleOrDefault(u => u.Email == email && u.Password == password);
+            if (Accounts.SingleOrDefault(a => a.Email.Equals(request.Email)) != null)
+            {
+                return BadRequest("Account with this email already exists");
+            }
+
+            Accounts.Add(new Account
+            {
+                Id = Guid.NewGuid(),
+                Phone = request.Phone,
+                Email = request.Email,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+                Roles = new Role[] { Role.User }
+            });
+
+            return Ok();
+        }
+
+        private Account AuthenticateUser(string email)
+        {
+            return Accounts.SingleOrDefault(u => u.Email.Equals(email));
         }
 
         private string GenerateJWT(Account user)
