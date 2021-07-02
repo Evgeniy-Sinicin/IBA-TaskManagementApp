@@ -1,0 +1,9 @@
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.DataAccess\bin\Debug\netcoreapp3.1\TaskManagement.DataAccess.deps.json
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.DataAccess\bin\Debug\netcoreapp3.1\TaskManagement.DataAccess.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.DataAccess\bin\Debug\netcoreapp3.1\TaskManagement.DataAccess.pdb
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.DataAccess\obj\Debug\netcoreapp3.1\TaskManagement.DataAccess.csprojAssemblyReference.cache
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.DataAccess\obj\Debug\netcoreapp3.1\TaskManagement.DataAccess.AssemblyInfoInputs.cache
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.DataAccess\obj\Debug\netcoreapp3.1\TaskManagement.DataAccess.AssemblyInfo.cs
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.DataAccess\obj\Debug\netcoreapp3.1\TaskManagement.DataAccess.csproj.CoreCompileInputs.cache
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.DataAccess\obj\Debug\netcoreapp3.1\TaskManagement.DataAccess.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.DataAccess\obj\Debug\netcoreapp3.1\TaskManagement.DataAccess.pdb

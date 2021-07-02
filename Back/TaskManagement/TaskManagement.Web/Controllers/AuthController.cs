@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -7,8 +8,10 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
+using TaskManagement.DataAccess.Services;
 using TaskManagement.Web.Models;
+using Account = TaskManagement.Web.Models.Account;
+using AccountDB = TaskManagement.DataAccess.Models.Account;
 
 namespace TaskManagement.Web.Controllers
 {
@@ -16,47 +19,65 @@ namespace TaskManagement.Web.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IOptions<AuthOptions> authOptions;
+        private readonly IOptions<AuthOptions> _authOptions;
+        private readonly IMapper _mapper;
+        private readonly AccountService _service;
 
-        public AuthController(IOptions<AuthOptions> authOptions)
+        public AuthController(IOptions<AuthOptions> authOptions, IMapper mapper)
         {
-            this.authOptions = authOptions;
+            _authOptions = authOptions;
+            _mapper = mapper;
+            _service = new AccountService();
         }
 
-        // TODO: Accounts will be got from MongoDB
-        private List<Account> Accounts { get; set; } = new List<Account>
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        [Route("users")]
+        public IActionResult GetUsers()
         {
-            new Account()
-            {
-                Id = Guid.Parse("78976017-e3bc-441b-9149-e60e0d8426b3"),
-                Phone = "+375291111111",
-                Email = "user@email.com",
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("user"),
-                Roles = new Role[] { Role.User }
-            },
-            new Account()
-            {
-                Id = Guid.Parse("b896ab24-edb4-4dc7-a4ef-fe6184003f02"),
-                Phone = "+375292222222",
-                Email = "user2@email.com",
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("user2"),
-                Roles = new Role[] { Role.User }
-            },
-            new Account()
-            {
-                Id = Guid.Parse("d5c98c2d-d8fa-4949-89ec-48cbda5aab6b"),
-                Phone = "+375297757581",
-                Email = "admin@email.com",
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin"),
-                Roles = new Role[] { Role.Admin }
-            }
-        };
+            return Ok(_mapper.Map<List<Account>>(_service.GetAll()));
+        }
 
-        [Route("login")]
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        [Route("users/user")]
+        public IActionResult GetUser([FromHeader] Guid id)
+        {
+            var user = _mapper.Map<Account>(_service.Get(id));
+
+            if (user == null)
+            {
+                return BadRequest($"User is not found by id {id}");
+            }
+
+            return Ok(user);
+        }
+
         [HttpPost]
+        [Authorize]
+        [Route("users")]
+        public IActionResult UpdateUser([FromBody] Account user)
+        {
+            _service.Update(_mapper.Map<AccountDB>(user));
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("users")]
+        public IActionResult DeleteUser([FromHeader] Guid id)
+        {
+            _service.Delete(id);
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("login")]
         public IActionResult Login([FromBody] Login request)
         {
-            var user = AuthenticateUser(request.Email);
+            var user = _mapper.Map<List<Account>>(_service.GetAll()).SingleOrDefault(a => a.Email.Equals(request.Email));
 
             if (user != null)
             {
@@ -76,35 +97,25 @@ namespace TaskManagement.Web.Controllers
             return BadRequest("Email is unregistered");
         }
 
-        [Route("register")]
         [HttpPost]
+        [Route("register")]
         public IActionResult Register([FromBody] Registration request)
         {
-            if (Accounts.SingleOrDefault(a => a.Email.Equals(request.Email)) != null)
-            {
-                return BadRequest("Account with this email already exists");
-            }
-
-            Accounts.Add(new Account
+            _service.Add(_mapper.Map<AccountDB>(new Account
             {
                 Id = Guid.NewGuid(),
                 Phone = request.Phone,
                 Email = request.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
                 Roles = new Role[] { Role.User }
-            });
+            }));
 
             return Ok();
         }
 
-        private Account AuthenticateUser(string email)
-        {
-            return Accounts.SingleOrDefault(u => u.Email.Equals(email));
-        }
-
         private string GenerateJWT(Account user)
         {
-            var authParams = authOptions.Value;
+            var authParams = _authOptions.Value;
 
             var securityKey = authParams.GetSymmetricSecurityKey();
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

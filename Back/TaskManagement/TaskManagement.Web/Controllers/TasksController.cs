@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using TaskManagement.Web.ModelsDB;
+using System.Security.Claims;
+using Task = TaskManagement.Web.Models.Task;
+using TaskDB = TaskManagement.DataAccess.Models.Task;
+using TaskManagement.DataAccess.Services;
+using AutoMapper;
 
 namespace TaskManagement.Web.Controllers
 {
@@ -12,19 +15,74 @@ namespace TaskManagement.Web.Controllers
     [ApiController]
     public class TasksController : ControllerBase
     {
-        private readonly TaskStore store;
+        private readonly TaskService _service;
+        private readonly IMapper _mapper;
+        private Guid UserId => Guid.Parse(User.Claims.Single(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-        public TasksController(TaskStore store)
+        public TasksController(IMapper mapper)
         {
-            this.store = store;
+            _service = new TaskService();
+            _mapper = mapper;
         }
 
-        // TODO: This method is excess. It needs to delete.
         [HttpGet]
+        [Authorize]
         [Route("")]
         public IActionResult GetTasks()
         {
-            return Ok(store.Tasks);
+            return Ok(_mapper.Map<List<Task>>(_service.GetAll()).Where(t => t.UserId.Equals(UserId)).ToList());
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("task")]
+        public IActionResult GetTask([FromHeader] Guid id)
+        {
+            var task = _mapper.Map<Task>(_service.Get(id));
+
+            if (task == null)
+            {
+                return BadRequest($"Task is not found by id {id}");
+            }
+
+            if (!UserId.Equals(task.UserId))
+            {
+                BadRequest("You can't get foreign task");
+            }
+
+            return Ok(task);
+        }
+
+        [HttpPut]
+        [Authorize]
+        [Route("")]
+        public IActionResult AddTask([FromBody] Task task)
+        {
+            task.Id = Guid.NewGuid();
+            task.UserId = UserId;
+            _service.Add(_mapper.Map<TaskDB>(task));
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("")]
+        public IActionResult UpdateTask([FromBody] Task task)
+        {
+            _service.Update(_mapper.Map<TaskDB>(task));
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("")]
+        public IActionResult DeleteTask([FromHeader] Guid id)
+        {
+            _service.Delete(id);
+
+            return Ok();
         }
     }
 }
