@@ -6,8 +6,8 @@ using System.Linq;
 using System.Security.Claims;
 using Task = TaskManagement.Web.Models.Task;
 using TaskDB = TaskManagement.DataAccess.Models.Task;
-using TaskManagement.DataAccess.Services;
 using AutoMapper;
+using TaskManagement.DataAccess.Interfaces;
 
 namespace TaskManagement.Web.Controllers
 {
@@ -15,13 +15,13 @@ namespace TaskManagement.Web.Controllers
     [ApiController]
     public class TasksController : ControllerBase
     {
-        private readonly TaskService _service;
+        private readonly IService<TaskDB> _service;
         private readonly IMapper _mapper;
         private Guid UserId => Guid.Parse(User.Claims.Single(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-        public TasksController(IMapper mapper)
+        public TasksController(IService<TaskDB> service, IMapper mapper)
         {
-            _service = new TaskService();
+            _service = service;
             _mapper = mapper;
         }
 

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using TaskManagement.DataAccess.Services;
+using TaskManagement.DataAccess.Interfaces;
 using TaskManagement.Web.Models;
 using Account = TaskManagement.Web.Models.Account;
 using AccountDB = TaskManagement.DataAccess.Models.Account;
@@ -20,14 +20,14 @@ namespace TaskManagement.Web.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IOptions<AuthOptions> _authOptions;
+        private readonly IService<AccountDB> _service;
         private readonly IMapper _mapper;
-        private readonly AccountService _service;
 
-        public AuthController(IOptions<AuthOptions> authOptions, IMapper mapper)
+        public AuthController(IOptions<AuthOptions> authOptions, IService<AccountDB> service, IMapper mapper)
         {
             _authOptions = authOptions;
+            _service = service;
             _mapper = mapper;
-            _service = new AccountService();
         }
 
         [HttpGet]
