@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
+using TaskManagement.DataAccess.Configurations;
 using TaskManagement.DataAccess.Interfaces;
 using TaskManagement.DataAccess.Models;
 
@@ -9,61 +10,38 @@ namespace TaskManagement.DataAccess.Services
 {
     public class AccountService : IService<Account>
     {
-        private const string FILE_PATH = "users.json";
-        private List<Account> _accounts = new List<Account>();
+        private readonly IMongoCollection<Account> _collection;
+
+        public AccountService(IOptions<ConfigurationDB> config)
+        {
+            var mongoClient = new MongoClient(config.Value.Connection_String);
+            var db = mongoClient.GetDatabase(config.Value.Database_Name);
+            _collection = db.GetCollection<Account>(config.Value.Account_Collection_Name);
+        }
 
         public List<Account> GetAll()
         {
-            ReadAccs();
-
-            return _accounts;
+            return _collection.Find(a => true).ToList();
         }
 
-        public Account Get(Guid id)
+        public Account Get(string id)
         {
-            return GetAll().SingleOrDefault(a => a.Id.Equals(id));
+            return _collection.Find(a => a.Id.Equals(id)).FirstOrDefault();
         }
 
         public void Add(Account item)
         {
-            ReadAccs();
-
-            _accounts.Add(item);
-
-            WriteAccs();
+            _collection.InsertOne(item);
         }
 
         public void Update(Account item)
         {
-            var original = Get(item.Id);
-
-            original.Phone = item.Phone;
-            original.Email = item.Email;
-            original.PasswordHash = item.PasswordHash;
-            original.Roles = item.Roles;
-
-            WriteAccs();
+            _collection.ReplaceOne(a => a.Id.Equals(item.Id), item);
         }
 
-        public void Delete(Guid id)
+        public void Delete(string id)
         {
-            ReadAccs();
-
-            _accounts = _accounts.Where(a => !a.Id.Equals(id)).ToList();
-
-            WriteAccs();
-        }
-
-        private async void ReadAccs()
-        {
-            var json = await System.IO.File.ReadAllTextAsync(FILE_PATH);
-            _accounts = JsonConvert.DeserializeObject<List<Account>>(json);
-        }
-
-        private async void WriteAccs()
-        {
-            var json = JsonConvert.SerializeObject(_accounts);
-            await System.IO.File.WriteAllTextAsync(FILE_PATH, json);
+            _collection.DeleteOne(a => a.Id.Equals(id));
         }
     }
 }

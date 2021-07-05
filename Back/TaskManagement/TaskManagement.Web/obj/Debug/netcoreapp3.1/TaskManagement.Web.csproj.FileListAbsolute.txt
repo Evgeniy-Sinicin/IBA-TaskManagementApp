@@ -65,3 +65,17 @@ D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3
 D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\TaskManagement.DataAccess.pdb
 D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\AutoMapper.dll
 D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\DnsClient.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\MongoDB.Driver.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\MongoDB.Driver.Core.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\MongoDB.Libmongocrypt.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\SharpCompress.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\runtimes\win\native\libzstd.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\runtimes\win\native\snappy32.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\runtimes\win\native\snappy64.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\runtimes\linux\native\libmongocrypt.so
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\runtimes\osx\native\libmongocrypt.dylib
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\runtimes\win\native\mongocrypt.dll

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TaskManagement.DataAccess.Configurations;
 using TaskManagement.DataAccess.Interfaces;
 using TaskManagement.DataAccess.Services;
 using TaskManagement.Web.Models;
@@ -19,12 +20,11 @@ namespace TaskManagement.Web
             Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IService<DataAccess.Models.Account>, AccountService>();
-            services.AddTransient<IService<DataAccess.Models.Task>, TaskService>();
+            services.Configure<ConfigurationDB>(Configuration);
+            services.AddSingleton<IService<DataAccess.Models.Account>, AccountService>();
+            services.AddSingleton<IService<DataAccess.Models.Task>, TaskService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
 
@@ -61,11 +61,8 @@ namespace TaskManagement.Web
                            .AllowAnyHeader();
                 });
             });
-
-            //services.AddSingleton(new TaskStore());
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

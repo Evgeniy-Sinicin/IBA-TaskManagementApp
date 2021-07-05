@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -17,7 +16,7 @@ namespace TaskManagement.Web.Controllers
     {
         private readonly IService<TaskDB> _service;
         private readonly IMapper _mapper;
-        private Guid UserId => Guid.Parse(User.Claims.Single(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        private string UserEmail => User.Claims.Single(c => c.Type == ClaimTypes.Email).Value;
 
         public TasksController(IService<TaskDB> service, IMapper mapper)
         {
@@ -30,13 +29,13 @@ namespace TaskManagement.Web.Controllers
         [Route("")]
         public IActionResult GetTasks()
         {
-            return Ok(_mapper.Map<List<Task>>(_service.GetAll()).Where(t => t.UserId.Equals(UserId)).ToList());
+            return Ok(_mapper.Map<List<Task>>(_service.GetAll()).Where(t => t.UserEmail.Equals(UserEmail)).ToList());
         }
 
         [HttpGet]
         [Authorize]
-        [Route("task")]
-        public IActionResult GetTask([FromHeader] Guid id)
+        [Route("{id}")]
+        public IActionResult GetTask(string id)
         {
             var task = _mapper.Map<Task>(_service.Get(id));
 
@@ -45,9 +44,9 @@ namespace TaskManagement.Web.Controllers
                 return BadRequest($"Task is not found by id {id}");
             }
 
-            if (!UserId.Equals(task.UserId))
+            if (!task.UserEmail.Equals(UserEmail))
             {
-                BadRequest("You can't get foreign task");
+                return BadRequest("You can't get foreign task");
             }
 
             return Ok(task);
@@ -58,8 +57,11 @@ namespace TaskManagement.Web.Controllers
         [Route("")]
         public IActionResult AddTask([FromBody] Task task)
         {
-            task.Id = Guid.NewGuid();
-            task.UserId = UserId;
+            if (!task.UserEmail.Equals(UserEmail))
+            {
+                return BadRequest("You aren't allowed to add task to foreign user");
+            }
+
             _service.Add(_mapper.Map<TaskDB>(task));
 
             return Ok();
@@ -70,6 +72,16 @@ namespace TaskManagement.Web.Controllers
         [Route("")]
         public IActionResult UpdateTask([FromBody] Task task)
         {
+            if (_mapper.Map<Task>(_service.Get(task.Id)) == null)
+            {
+                return BadRequest($"Task is not found by id {task.Id}");
+            }
+
+            if (!task.UserEmail.Equals(UserEmail))
+            {
+                return BadRequest("You aren't allowed to update task of foreign user");
+            }
+
             _service.Update(_mapper.Map<TaskDB>(task));
 
             return Ok();
@@ -77,9 +89,21 @@ namespace TaskManagement.Web.Controllers
 
         [HttpDelete]
         [Authorize]
-        [Route("")]
-        public IActionResult DeleteTask([FromHeader] Guid id)
+        [Route("{id}")]
+        public IActionResult DeleteTask(string id)
         {
+            var task = _mapper.Map<Task>(_service.Get(id));
+
+            if (task == null)
+            {
+                return BadRequest($"Task is not found by id {id}");
+            }
+
+            if (!task.UserEmail.Equals(UserEmail))
+            {
+                return BadRequest("You aren't allowed to delete task of foreign user");
+            }
+
             _service.Delete(id);
 
             return Ok();

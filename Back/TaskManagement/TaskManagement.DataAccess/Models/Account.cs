@@ -1,5 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace TaskManagement.DataAccess.Models
 {
@@ -12,8 +12,8 @@ namespace TaskManagement.DataAccess.Models
     public class Account
     {
         [BsonId]
-        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        public Guid Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }

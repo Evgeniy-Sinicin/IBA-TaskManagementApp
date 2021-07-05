@@ -46,7 +46,15 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
             "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[2.12.4, )"
+            },
+            "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.12.4, )"
             },

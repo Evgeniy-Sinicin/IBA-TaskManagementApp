@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TaskManagement.DataAccess.Configurations;
 using TaskManagement.DataAccess.Interfaces;
 using TaskManagement.DataAccess.Models;
 
@@ -9,60 +11,45 @@ namespace TaskManagement.DataAccess.Services
 {
     public class TaskService : IService<Task>
     {
-        private const string FILE_PATH = "tasks.json";
-        private List<Task> _tasks = new List<Task>();
+        private readonly IMongoCollection<Task> _collection;
+
+        public TaskService(IOptions<ConfigurationDB> config)
+        {
+            var mongoClient = new MongoClient(config.Value.Connection_String);
+            var db = mongoClient.GetDatabase(config.Value.Database_Name);
+            _collection = db.GetCollection<Task>(config.Value.Task_Collection_Name);
+        }
 
         public List<Task> GetAll()
         {
-            ReadTasks();
-
-            return _tasks;
+            return _collection.Find(t => true).ToList();
         }
 
-        public Task Get(Guid id)
+        public Task Get(string id)
         {
-            return GetAll().SingleOrDefault(t => t.Id.Equals(id));
+            try
+            {
+                return _collection.Find(t => t.Id.Equals(id)).FirstOrDefault();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public void Add(Task task)
         {
-            ReadTasks();
-
-            _tasks.Add(task);
-
-            WriteTasks();
+            _collection.InsertOne(task);
         }
 
         public void Update(Task task)
         {
-            var original = Get(task.Id);
-
-            original.Name = task.Name;
-            original.Description = task.Description;
-            original.UserId = task.UserId;
-
-            WriteTasks();
+            _collection.ReplaceOne(t => t.Id.Equals(task.Id), task);
         }
 
-        public void Delete(Guid id)
+        public void Delete(string id)
         {
-            ReadTasks();
-
-            _tasks = _tasks.Where(t => !t.Id.Equals(id)).ToList();
-
-            WriteTasks();
-        }
-
-        private async void ReadTasks()
-        {
-            var json = await System.IO.File.ReadAllTextAsync(FILE_PATH);
-            _tasks = JsonConvert.DeserializeObject<List<Task>>(json);
-        }
-
-        private async void WriteTasks()
-        {
-            var json = JsonConvert.SerializeObject(_tasks);
-            await System.IO.File.WriteAllTextAsync(FILE_PATH, json);
+            _collection.DeleteOne(t => t.Id.Equals(id));
         }
     }
 }

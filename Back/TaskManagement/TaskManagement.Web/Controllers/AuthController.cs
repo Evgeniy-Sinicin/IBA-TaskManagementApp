@@ -40,8 +40,8 @@ namespace TaskManagement.Web.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        [Route("users/user")]
-        public IActionResult GetUser([FromHeader] Guid id)
+        [Route("users/{id}")]
+        public IActionResult GetUser(string id)
         {
             var user = _mapper.Map<Account>(_service.Get(id));
 
@@ -66,7 +66,7 @@ namespace TaskManagement.Web.Controllers
         [HttpDelete]
         [Authorize]
         [Route("users")]
-        public IActionResult DeleteUser([FromHeader] Guid id)
+        public IActionResult DeleteUser(string id)
         {
             _service.Delete(id);
 
@@ -97,18 +97,19 @@ namespace TaskManagement.Web.Controllers
             return BadRequest("Email is unregistered");
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("register")]
         public IActionResult Register([FromBody] Registration request)
         {
-            _service.Add(_mapper.Map<AccountDB>(new Account
+            var account = new Account
             {
-                Id = Guid.NewGuid(),
                 Phone = request.Phone,
                 Email = request.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
                 Roles = new Role[] { Role.User }
-            }));
+            };
+
+            _service.Add(_mapper.Map<AccountDB>(account));
 
             return Ok();
         }

@@ -11,14 +11,20 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DATABASE_NAME": "TaskManagementDB",
+        "ACCOUNT_COLLECTION_NAME": "Accounts",
+        "TASK_COLLECTION_NAME": "Tasks"
       }
     },
     "TaskManagement.Web": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DATABASE_NAME": "TaskManagementDB",
+        "ACCOUNT_COLLECTION_NAME": "Accounts",
+        "TASK_COLLECTION_NAME": "Tasks"
       },
       "applicationUrl": "http://localhost:5000"
     }

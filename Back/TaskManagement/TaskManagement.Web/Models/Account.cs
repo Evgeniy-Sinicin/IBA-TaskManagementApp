@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TaskManagement.Web.Models
+﻿namespace TaskManagement.Web.Models
 {
     public enum Role
     {
@@ -10,7 +8,7 @@ namespace TaskManagement.Web.Models
 
     public class Account
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
