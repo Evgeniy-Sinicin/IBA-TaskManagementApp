@@ -10,6 +10,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HomeComponent } from './components/home/home.component';
 import { OwnersComponent } from './components/owners/owners.component';
@@ -42,6 +44,8 @@ export function tokenGetter() {
     MatButtonModule,
     MatTableModule,
     MatFormFieldModule,
+    MatIconModule,
+    MatToolbarModule,
 
     JwtModule.forRoot({
       config: {

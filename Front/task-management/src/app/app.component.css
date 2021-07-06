@@ -1,27 +1,22 @@
-.topnav {
-    overflow: hidden;
-    background-color: #333;
-}
-
-a {
-    background-color: #4f4;
-    float: left;
-    color: #000;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
-
-a:hover {
-    background-color: #ddd;
-    color: #000;
-}
-
-a:active {
-    background-color: #af4c4c;
-}
-
-.example-form-field {
+.form-field {
     margin-right: 20px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.button-nav {
+    margin: 0px 0px 0px 15px; 
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.align-center-form {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none;
 }

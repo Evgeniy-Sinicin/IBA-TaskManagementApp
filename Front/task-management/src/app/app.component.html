@@ -1,24 +1,72 @@
 <div>
 
-<div class="topnav">
-  <a [routerLink]="['']" routerLinkActive='active' [routerLinkActiveOptions]="{ exact: true }">TasksStore</a>
-  <a [routerLink]="['/owners']" routerLinkActive='active' [routerLinkActiveOptions]="{ exact: true }" *ngIf='isLoggedIn'>Owners</a>
-</div>
+<mat-toolbar>
+  <button mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Task Management App</span>
+  <span class="spacer"></span>
+  <button *ngIf="!isLoggedIn && !isLoginButtonClicked" mat-raised-button class="button-nav" (click)="clickLoginButton()">
+    Login
+    <mat-icon>login</mat-icon>
+  </button>
+  <button *ngIf="!isLoggedIn && !isRegisterButtonClicked" mat-raised-button class="button-nav" (click)="clickRegisterButton()">
+    Sign Up
+    <mat-icon>person_add</mat-icon>
+  </button>
+  <button *ngIf="isLoggedIn" mat-raised-button class="button-nav" (click)="logout()">
+    Logout
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
 
-<mat-card *ngIf='!isLoggedIn'>
-  <mat-form-field class="example-form-field">
+<!-- <div class="topnav">
+  <a [routerLink]="['']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">TasksStore</a>
+  <a [routerLink]="['/owners']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngIf="isLoggedIn">Owners</a>
+</div> -->
+
+<mat-card *ngIf="!isLoggedIn && isLoginButtonClicked" class="align-center-form">
+  <mat-card-title class="text-align-center">Login</mat-card-title>
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput placeholder="user@email.com" #email>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput #password>
+    </mat-form-field>
+  </div>
+  <button mat-raised-button (click)="login(email.value, password.value)">
+    Login
+    <mat-icon>login</mat-icon>
+  </button>
+</mat-card>
+
+<mat-card *ngIf="!isLoggedIn && isRegisterButtonClicked" class="align-center-form">
+  <mat-card-title class="text-align-center">Sign Up</mat-card-title>
+  <mat-form-field class="form-field">
+    <mat-label>Phone</mat-label>
+    <input type="phone" matInput placeholder="+375291234567" #phone>
+  </mat-form-field>
+  <mat-form-field class="form-field">
     <mat-label>Email</mat-label>
     <input type="email" matInput placeholder="user@email.com" #email>
   </mat-form-field>
-  <mat-form-field class="example-form-field">
+  <mat-form-field class="form-field">
     <mat-label>Password</mat-label>
     <input type="password" matInput #password>
   </mat-form-field>
-  <button mat-flat-button color="primary" (click)='login(email.value, password.value)'>Login</button>
-</mat-card>
-
-<mat-card *ngIf='isLoggedIn'>
-  <button mat-flat-button color="primary" (click)='logout()'>Logout</button>
+  <mat-form-field class="form-field">
+    <mat-label>Password confirm</mat-label>
+    <input type="password" matInput #passwordConfirm>
+  </mat-form-field>
+  <button mat-raised-button (click)="register(phone.value, email.value, password.value, passwordConfirm.value); isLoginButtonClicked = true; isRegisterButtonClicked = false;">
+    Sign Up
+    <mat-icon>person_add</mat-icon>
+  </button>
 </mat-card>
 
 <router-outlet></router-outlet>
