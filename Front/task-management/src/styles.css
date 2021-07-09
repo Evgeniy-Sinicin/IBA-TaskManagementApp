@@ -1,4 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+* {
+    cursor: url(./images/Cursor.png), auto !important;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0%;
+}
+
+body {
+    display                  : flex;
+    flex-direction           : column;
+    font-family              : Roboto, "Helvetica Neue", sans-serif;
+    background-image         : url(./images/Background.png);
+    background-size          : cover;
+    /* background-position-y : -40px; */
+    /* backdrop-filter       : saturate(2); */
+    /* box-shadow            : 0px -25px 25px 0px rgb(255 255 255) inset; */
+    /* box-shadow            : -10px 20px 50px 75px rgb(255 255 255) inset; */
+}
+
+app-root {
+    height: 100%;
+}
+
+.mat-simple-snackbar {
+    justify-content: center !important;
+    color          : white;
+}
+
+.mat-horizontal-content-container {
+    padding: 0 !important;
+}

@@ -1,0 +1,33 @@
+mat-card {
+    width  : 500px;
+    opacity: 90%;
+}
+
+mat-card-title {
+    text-align: center;
+}
+
+mat-card-actions {
+    display        : flex;
+    flex-direction : row;
+    justify-content: center;
+    margin         : 0px;
+    padding        : 0px;
+}
+
+.mat-card>.mat-card-actions:last-child {
+    margin-bottom: 0px;
+}
+
+p {
+    text-align : justify;
+    text-indent: 20px;
+}
+
+button {
+    cursor: url(../../../images/Cursor.png), auto;
+}
+
+.mat-card-actions .mat-button, .mat-card-actions .mat-raised-button, .mat-card-actions .mat-stroked-button {
+    margin-left: 25px;
+}

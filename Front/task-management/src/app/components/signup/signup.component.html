@@ -1,0 +1,180 @@
+<mat-card>
+
+  <mat-card-title class="text-align-center">Sign Up</mat-card-title>
+
+  <mat-stepper linear #stepper>
+
+    <mat-step [stepControl]="phoneFormGroup" errorMessage="Phone is required!">
+      <form [formGroup]="phoneFormGroup">
+        <ng-template matStepLabel>Fill out your phone 📱</ng-template>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Phone</mat-label>
+          <input type="tel" matInput placeholder="+375291234567" formControlName="phoneCtrl" required>
+          <button *ngIf="this.phoneFormGroup.controls.phoneCtrl.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="this.phoneFormGroup.controls.phoneCtrl.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="phoneCtrl.hasError('required')">
+            Phone is <strong>required</strong>!
+          </mat-error>
+          <mat-error *ngIf="phoneCtrl.hasError('pattern')">
+            Wrong phone <strong>pattern</strong>! (See hint)
+          </mat-error>
+        </mat-form-field>
+
+        <div>
+          <p>Enter your phone number to receive notifications 🔔</p>
+          <button mat-button matStepperNext>Next ▶</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="emailFormGroup" errorMessage="Email is required!">
+      <form [formGroup]="emailFormGroup">
+        <ng-template matStepLabel>Fill out your email 💌</ng-template>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input required matInput type="email" placeholder="address@email.com" formControlName="emailCtrl"
+            [errorStateMatcher]="emailMatcher">
+          <mat-hint *ngIf="!emailCtrl.hasError('required')">Your email is valid ✔</mat-hint>
+          <mat-error *ngIf="emailCtrl.hasError('email') && !emailCtrl.hasError('required')">
+            Please enter a valid email!
+          </mat-error>
+          <mat-error *ngIf="emailCtrl.hasError('required')">
+            Email is <strong>required</strong>!
+          </mat-error>
+        </mat-form-field>
+
+        <div>
+          <p>Enter your email address to login to site 🌐</p>
+          <button mat-button matStepperPrevious>◀ Back</button>
+          <button mat-button matStepperNext>Next ▶</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="passwordFormGroup" errorMessage="Password is required!">
+      <form [formGroup]="passwordFormGroup">
+        <ng-template matStepLabel>Fill out your password 🔐</ng-template>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="isPasswordHidden ? 'password' : 'text'" matInput formControlName="passwordCtrl"
+            [errorStateMatcher]="passwordMatcher" required>
+          <mat-error *ngIf="passwordFormGroup.hasError('required', 'passwordCtrl') && !passwordFormGroup.hasError('notSame')">
+            Password is <strong>required</strong>!
+          </mat-error>
+          <mat-error *ngIf="passwordFormGroup.hasError('notSame')">
+            Passwords <strong>don't match</strong>!
+          </mat-error>
+          <button mat-icon-button matSuffix (click)="isPasswordHidden = !isPasswordHidden"
+            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="isPasswordHidden">
+            <mat-icon>{{isPasswordHidden ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Password confirm</mat-label>
+          <input matInput [type]="isPasswordConfirgHidden ? 'password' : 'text'" matInput
+            formControlName="passwordConfirm" [errorStateMatcher]="passwordMatcher" required>
+          <mat-error *ngIf="passwordFormGroup.hasError('notSame')">
+            Passwords <strong>don't match</strong>!
+          </mat-error>
+          <button mat-icon-button matSuffix (click)="isPasswordConfirgHidden = !isPasswordConfirgHidden"
+            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="isPasswordConfirgHidden">
+            <mat-icon>{{isPasswordConfirgHidden ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <div>
+          <p>Enter your password to login to site 🌐</p>
+          <button mat-button matStepperPrevious>◀ Back</button>
+          <button mat-button matStepperNext>Next ▶</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Done ✔</ng-template>
+
+      <p>You are now done 🥳 🎈</p>
+
+      <button mat-raised-button (click)="clickSignUpButton()">
+        Sign Up
+        <mat-icon>person_add</mat-icon>
+      </button>
+
+      <div>
+        <button mat-button matStepperPrevious>◀ Back</button>
+        <button mat-button (click)="stepper.reset()">Reset ↩</button>
+      </div>
+    </mat-step>
+
+  </mat-stepper>
+
+</mat-card>
+
+<!-- <mat-card>
+
+    <mat-card-title class="text-align-center">Sign Up</mat-card-title>
+
+    <mat-form-field class="form-field">
+        <mat-label>Phone</mat-label>
+        <input type="phone" matInput placeholder="+375291234567" #phone>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput placeholder="user@email.com" #email>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput #password>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>Password confirm</mat-label>
+        <input type="password" matInput #passwordConfirm>
+    </mat-form-field>
+
+    <button mat-raised-button (click)="clickSignUpButton(phone.value, email.value, password.value, passwordConfirm.value)">
+        Sign Up
+        <mat-icon>person_add</mat-icon>
+    </button>
+
+</mat-card> -->
+
+<!-- <mat-card *ngIf="!isLoggedIn && isRegisterButtonClicked">
+
+      <mat-card-title class="text-align-center">Sign Up</mat-card-title>
+
+      <mat-form-field class="form-field">
+        <mat-label>Phone</mat-label>
+        <input type="phone" matInput placeholder="+375291234567" #phone>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput placeholder="user@email.com" #email>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput #password>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Password confirm</mat-label>
+        <input type="password" matInput #passwordConfirm>
+      </mat-form-field>
+
+      <button mat-raised-button
+        (click)="register(phone.value, email.value, password.value, passwordConfirm.value); isLoginButtonClicked = true; isRegisterButtonClicked = false;">
+        Sign Up
+        <mat-icon>person_add</mat-icon>
+      </button>
+
+    </mat-card> -->

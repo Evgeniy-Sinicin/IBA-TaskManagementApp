@@ -1,0 +1,23 @@
+.text-align-center {
+    text-align: center;
+}
+
+mat-card {
+    text-align    : center;
+    box-shadow    : none;
+    opacity       : 90%;
+    display       : flex;
+    flex-direction: column;
+    align-items   : stretch;
+}
+
+mat-form-field {
+    width: 15em;
+    display: block;
+    margin-block-start: .5em;
+    margin-block-end: .5em;
+}
+
+button {
+    cursor: url(../../../images/Cursor.png), auto;
+}

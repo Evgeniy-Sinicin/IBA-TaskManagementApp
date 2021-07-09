@@ -13,14 +13,19 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatStepperModule } from '@angular/material/stepper';
 import { HomeComponent } from './components/home/home.component';
 import { OwnersComponent } from './components/owners/owners.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { WEB_API_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { JwtModule } from '@auth0/angular-jwt'
 import { ACCESS_TOKEN_KEY } from './services/auth.service';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 export function tokenGetter() {
   return localStorage.getItem(ACCESS_TOKEN_KEY)
@@ -31,13 +36,16 @@ export function tokenGetter() {
     AppComponent,
     HomeComponent,
     OwnersComponent,
-    TasksComponent
+    TasksComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ReactiveFormsModule,
 
     MatCardModule,
     MatInputModule,
@@ -46,6 +54,8 @@ export function tokenGetter() {
     MatFormFieldModule,
     MatIconModule,
     MatToolbarModule,
+    MatSnackBarModule,
+    MatStepperModule,
 
     JwtModule.forRoot({
       config: {

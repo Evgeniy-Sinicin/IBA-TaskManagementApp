@@ -19,12 +19,6 @@ export class AccountService {
   ) { }
 
   register(phone: string, email: string, password: string, passwordConfirm: string): Observable<unknown> {
-    console.log({
-      phone,
-      email,
-      password,
-      passwordConfirm
-    })
     return this.http.put<unknown>(`${this.apiUrl}api/auth/register`, {
       phone,
       email,
@@ -32,4 +26,5 @@ export class AccountService {
       passwordConfirm
     });
   }
+  
 }

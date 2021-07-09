@@ -1,0 +1,41 @@
+<mat-card>
+
+  <mat-card-title class="text-align-center">Login</mat-card-title>
+
+  <form [formGroup]="loginFormGroup">
+    <mat-form-field appearance="fill">
+      <mat-label>Email *</mat-label>
+      <input type="email" matInput placeholder="user@email.com" formControlName="emailCtrl"
+        [errorStateMatcher]="emailMatcher" #email>
+      <button *ngIf="this.loginFormGroup.controls.emailCtrl.value" matSuffix mat-icon-button aria-label="Clear"
+        (click)="this.loginFormGroup.controls.emailCtrl.setValue('')">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-hint *ngIf="!emailCtrl.hasError('required')">Your email is valid ✔</mat-hint>
+      <mat-error *ngIf="emailCtrl.hasError('email') && !emailCtrl.hasError('required')">
+        Please enter a <strong>valid</strong> email!
+      </mat-error>
+      <mat-error *ngIf="emailCtrl.hasError('required')">
+        Email is <strong>required</strong>!
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="isPasswordHidden ? 'password' : 'text'" matInput formControlName="passwordCtrl" required>
+      <mat-error *ngIf="loginFormGroup.hasError('required', 'passwordCtrl')">
+        Password is <strong>required</strong>!
+      </mat-error>
+      <button mat-icon-button matSuffix (click)="isPasswordHidden = !isPasswordHidden"
+        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="isPasswordHidden">
+        <mat-icon>{{isPasswordHidden ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+
+  <button mat-raised-button (click)="clickLoginButton()">
+    Login
+    <mat-icon>login</mat-icon>
+  </button>
+
+</mat-card>

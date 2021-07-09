@@ -1,1 +1,20 @@
-<p>home works!</p>
+<mat-card>
+    <mat-card-title>Привет :)</mat-card-title>
+    <mat-card-content>
+        <p>
+            Вы попали на главную страницу приложения по управлению задачами.
+            Зарегистрируйтесь или авторизуйтесь, чтобы начать работу.
+        </p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button (click)="clickLoginButton()">
+            Login
+            <mat-icon>login</mat-icon>
+        </button>
+
+        <button mat-raised-button (click)="clickSignUpButton()">
+            Sign Up
+            <mat-icon>person_add</mat-icon>
+        </button>
+    </mat-card-actions>
+</mat-card>
