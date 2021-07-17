@@ -1,9 +1,9 @@
-<mat-card>
-    <mat-card-title>Привет :)</mat-card-title>
+<mat-card *ngIf="!user || !isLoggedIn">
+    <mat-card-title>Hello 🖐</mat-card-title>
     <mat-card-content>
         <p>
-            Вы попали на главную страницу приложения по управлению задачами.
-            Зарегистрируйтесь или авторизуйтесь, чтобы начать работу.
+            You have arrived at the main page of Task Management Application. <br />
+            Sign Up or Login to get started.
         </p>
     </mat-card-content>
     <mat-card-actions>
@@ -17,4 +17,24 @@
             <mat-icon>person_add</mat-icon>
         </button>
     </mat-card-actions>
+</mat-card>
+
+<mat-card *ngIf="user && isLoggedIn">
+    <mat-card-title>Menu</mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+        <button (click)="clickTasksButton()" mat-raised-button>
+            Tasks
+            <mat-icon>today</mat-icon>
+        </button>
+    </mat-card-actions>
+    <mat-divider></mat-divider>
+    <mat-card-subtitle>Account Info 🧾</mat-card-subtitle>
+    <mat-card-content>
+        <p><b>Phone 📱:</b> {{user.phone}}</p>
+        <p><b>Email 📪:</b> {{user.email}}</p>
+        <p>
+            <b>Roles 🎭: </b> <span *ngFor="let r of user.roles">{{getRoleName(r)}} </span>
+        </p>
+    </mat-card-content>
 </mat-card>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AccountService } from './services/account.service';
 import { AuthService } from './services/auth.service';
 
@@ -12,15 +13,16 @@ export class AppComponent {
   private _isRegisterButtonClicked: boolean;
 
   constructor(
-    private authService: AuthService,
-    private accountService: AccountService
+    private _authService: AuthService,
+    private _accountService: AccountService,
+    private _router: Router,
     ) { 
     this._isLoginButtonClicked = false;
     this._isRegisterButtonClicked = false;
   }
 
   public get isLoggedIn(): boolean {
-    return this.authService.isAuthenticated()
+    return this._authService.isAuthenticated()
   }
 
   public get isLoginButtonClicked(): boolean {
@@ -39,6 +41,10 @@ export class AppComponent {
     this._isRegisterButtonClicked = value;
   }
 
+  public clickHomeButton() {
+    this._router.navigate(['/'])
+  }
+
   public clickLoginButton() {
     this._isLoginButtonClicked = !this._isLoginButtonClicked;
     this._isRegisterButtonClicked = false;
@@ -50,7 +56,7 @@ export class AppComponent {
   }
 
   login(email: string, password: string) {
-    this.authService.login(email, password)
+    this._authService.login(email, password)
     .subscribe(res => {
 
     }, error => {
@@ -59,11 +65,11 @@ export class AppComponent {
   }
 
   logout() {
-    this.authService.logout();
+    this._authService.logout();
   }
 
   register(phone: string, email: string, password: string, confirmPassword: string) {
-    this.accountService.register(phone, email, password, confirmPassword)
+    this._accountService.register(phone, email, password, confirmPassword)
     .subscribe(res => {
       alert('Registration was successful :)')
     }, error => {

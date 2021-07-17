@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { WEB_API_URL } from '../app-injection-tokens';
-import { Token } from '../models/token';
 import { tap } from 'rxjs/operators'
+import { Account } from '../models/account';
 
-export const ACCESS_TOKEN_KEY = 'taskstore_access_token'
+export const ACCOUNT = 'taskstore_account'
 
 @Injectable({
   providedIn: 'root'
@@ -15,34 +15,39 @@ export const ACCESS_TOKEN_KEY = 'taskstore_access_token'
 export class AuthService {
 
   constructor(
-    private http: HttpClient,
-    @Inject(WEB_API_URL) private apiUrl: string,
-    private jwtHelper: JwtHelperService,
-    private router: Router
+    private _http: HttpClient,
+    @Inject(WEB_API_URL) private _apiUrl: string,
+    private _jwtHelper: JwtHelperService,
+    private _router: Router
   ) { }
 
-  login(email: string, password: string): Observable<Token> {
-    return this.http.post<Token>(`${this.apiUrl}api/auth/login`, { 
+  login(email: string, password: string): Observable<Account> {
+    return this._http.post<Account>(`${this._apiUrl}api/auth/login`, { 
       email, 
       password 
-    }).pipe(tap(token => {
-      localStorage.setItem(ACCESS_TOKEN_KEY, token.access_token);
+    }).pipe(tap(user => {
+      localStorage.setItem(ACCOUNT, JSON.stringify(user))
     }));
   }
 
   isAuthenticated(): boolean {
-    var token = localStorage.getItem(ACCESS_TOKEN_KEY);
+    var jsonAcc = localStorage.getItem(ACCOUNT)
 
-    if (token != null)
-    {
-      return !this.jwtHelper.isTokenExpired(token)
+    if (!jsonAcc) {
+      return false
     }
-    
-    return false
+
+    var acc = JSON.parse(jsonAcc) as Account
+
+    if (!acc) {
+      return false
+    }
+
+    return !this._jwtHelper.isTokenExpired(acc.token)
   }
 
   logout(): void {
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-    this.router.navigate(['']);
+    localStorage.removeItem(ACCOUNT)
+    this._router.navigate([''])
   }
 }

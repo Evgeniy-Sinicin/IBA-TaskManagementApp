@@ -1,1 +1,108 @@
-<p>tasks works!</p>
+<mat-card>
+
+    <mat-card-header>
+        <mat-card-title>Task Table 📋</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Filter by Name</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+
+            <mat-progress-bar [style.visibility]="isLoading ? 'visible' : 'hidden'" class="mat-progress-bar-background"
+                mode="buffer">
+            </mat-progress-bar>
+
+            <button mat-button (click)="openAddingDialog()">
+                <mat-icon>add</mat-icon>
+            </button>
+
+            <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header hidden> ID </th>
+                    <td mat-cell *matCellDef="let row" class="truncate-cell" hidden>{{row.id}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                    <td mat-cell *matCellDef="let row" class="truncate-cell">{{row.name}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+                    <td mat-cell *matCellDef="let row" class="truncate-cell">{{row.description}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="userEmail">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header hidden> User Email </th>
+                    <td mat-cell *matCellDef="let row" hidden>{{row.userEmail}}</td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="edit">
+                    <th mat-header-cell *matHeaderCellDef>Edit 📝</th>
+                    <td mat-cell *matCellDef="let row">
+                        <button (click)="editButtonClick(row)" mat-icon-button>
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef>Delete ❌</th>
+                    <td mat-cell *matCellDef="let row">
+                        <button mat-icon-button>
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container> -->
+
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
+                        <div class="example-element-detail"
+                            [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'">
+                            <div class="example-element-description">
+                                <b>ID: </b>{{row.id}}
+                            </div>
+                            <div class="example-element-diagram">
+                                <div class="example-element-position"><b>Name: </b>{{row.name}}</div>
+                                <div class="example-element-symbol"><b>Description: </b>{{row.description}}</div>
+                            </div>
+                            <div class="detail-row-action">
+                                <button mat-button (click)="openUpdateDialog(row)">
+                                    Edit 📝
+                                </button>
+                                <button mat-button (click)="clickDeleteButton(row)">
+                                    Delete ❌
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"
+                    [class.example-expanded-row]="expandedElement === row"
+                    (click)="expandedElement = expandedElement === row ? null : row"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" [class.hidden-detail-row]="row">
+                </tr>
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5]"></mat-paginator>
+
+            <button mat-button (click)="refreshTable()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+
+        </div>
+
+    </mat-card-content>
+
+</mat-card>

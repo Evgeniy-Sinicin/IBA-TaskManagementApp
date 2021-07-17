@@ -1,0 +1,36 @@
+<mat-card>
+
+    <mat-card-title>Task Editor 🛠</mat-card-title>
+
+    <form [formGroup]="taskFormGroup">
+        <mat-form-field appearance="fill">
+            <mat-label>Name </mat-label>
+            <input type="text" matInput placeholder="Name" formControlName="nameCtrl" [ngModel]="data.name"
+                required #name>
+            <button *ngIf="this.taskFormGroup.controls.nameCtrl.value" matSuffix mat-icon-button aria-label="Clear"
+                (click)="this.taskFormGroup.controls.nameCtrl.setValue('')">
+                <mat-icon>close</mat-icon>
+            </button>
+            <mat-error *ngIf="nameCtrl.hasError('required')">
+                Name is <strong>required</strong>!
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput type="text" matInput formControlName="descriptionCtrl" [ngModel]="data.description"
+                #description></textarea>
+        </mat-form-field>
+    </form>
+
+    <span>
+        <button mat-button (click)="clickEditButton()">
+            Edit
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-button (click)="onNoClick()">
+            No, Thanks
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </span>
+</mat-card>

@@ -15,30 +15,67 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSortModule } from '@angular/material/sort';
+
 import { HomeComponent } from './components/home/home.component';
-import { OwnersComponent } from './components/owners/owners.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { WEB_API_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { JwtModule } from '@auth0/angular-jwt'
-import { ACCESS_TOKEN_KEY } from './services/auth.service';
+import { ACCOUNT } from './services/auth.service';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { Account } from './models/account';
+import { AddingTaskDialogComponent } from './components/adding-task-dialog/adding-task-dialog.component';
+import { UpdateTaskDialogComponent } from './components/update-task-dialog/update-task-dialog.component';
 
 export function tokenGetter() {
-  return localStorage.getItem(ACCESS_TOKEN_KEY)
+  var jsonAcc = localStorage.getItem(ACCOUNT)
+
+  if (!jsonAcc) {
+    return null
+  }
+
+  var acc = JSON.parse(jsonAcc) as Account
+
+  if (!acc) {
+    return null
+  }
+
+  return acc.token
+}
+
+export function emailGetter() {
+  var jsonAcc = localStorage.getItem(ACCOUNT)
+
+  if (!jsonAcc) {
+    return null
+  }
+
+  var acc = JSON.parse(jsonAcc) as Account
+
+  if (!acc) {
+    return null
+  }
+
+  return acc.email
 }
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    OwnersComponent,
     TasksComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    AddingTaskDialogComponent,
+    UpdateTaskDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +83,7 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
 
     MatCardModule,
     MatInputModule,
@@ -56,6 +94,11 @@ export function tokenGetter() {
     MatToolbarModule,
     MatSnackBarModule,
     MatStepperModule,
+    MatDividerModule,
+    MatProgressBarModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule,
 
     JwtModule.forRoot({
       config: {

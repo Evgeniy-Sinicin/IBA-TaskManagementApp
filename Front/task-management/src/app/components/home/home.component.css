@@ -1,6 +1,9 @@
 mat-card {
-    width  : 500px;
+    padding: 1em;
     opacity: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 mat-card-title {
@@ -20,14 +23,34 @@ mat-card-actions {
 }
 
 p {
+    margin: 5px;
     text-align : justify;
-    text-indent: 20px;
 }
 
 button {
     cursor: url(../../../images/Cursor.png), auto;
 }
 
-.mat-card-actions .mat-button, .mat-card-actions .mat-raised-button, .mat-card-actions .mat-stroked-button {
-    margin-left: 25px;
+mat-divider {
+    position: relative !important;
+}
+
+mat-card-title {
+    margin-bottom: 10px;
+}
+
+mat-card-subtitle {
+    margin-top: 10px !important;
+    margin-bottom: 10px;
+}
+
+mat-card-actions {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.roles {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

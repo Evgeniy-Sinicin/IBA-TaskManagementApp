@@ -6,8 +6,9 @@
 
 html,
 body {
-    height: 100%;
-    margin: 0%;
+    height  : 100%;
+    margin  : 0%;
+    overflow: hidden;
 }
 
 body {
@@ -33,4 +34,22 @@ app-root {
 
 .mat-horizontal-content-container {
     padding: 0 !important;
+}
+
+.mat-progress-bar-background {
+    fill: #00d7ff;
+}
+
+.mat-sort-header-container {
+    display        : flex;
+    cursor         : pointer;
+    align-items    : center;
+    letter-spacing : normal;
+    outline        : 0;
+    justify-content: center;
+    flex-direction : row;
+}
+
+.mat-paginator-container {
+    min-height: 20px;
 }

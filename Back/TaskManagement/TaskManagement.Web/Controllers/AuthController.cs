@@ -90,7 +90,10 @@ namespace TaskManagement.Web.Controllers
 
                 return Ok(new
                 {
-                    access_token = token
+                    phone = user.Phone,
+                    email = user.Email,
+                    roles = user.Roles,
+                    token,
                 });
             }
 

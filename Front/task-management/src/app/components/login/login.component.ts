@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   loginFormGroup: FormGroup
   emailMatcher = new EmailErrorStateMatcher()
   isPasswordHidden = true
+  isLoading = false
 
   get emailCtrl() {
     return this.loginFormGroup.controls.emailCtrl as FormControl
@@ -35,15 +36,18 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void { }
 
   clickLoginButton() {
+    this.isLoading = true
     this._authService.login(
-      this.loginFormGroup.controls.emailCtrl.value, 
+      this.loginFormGroup.controls.emailCtrl.value,
       this.loginFormGroup.controls.passwordCtrl.value)
       .subscribe(res => {
-      this._router.navigate(['tasks'])
-      this._snackBar.open('Authorization is successful ✔ 🥳 🎈', undefined, { duration: 3000, verticalPosition: 'top' })
-    }, error => {
-      this.loginFormGroup.reset()
-      this._snackBar.open('Authorization is failed 😢', undefined, { duration: 3000, verticalPosition: 'top' })
-    })
+        this.isLoading = false
+        this._router.navigate(['/'])
+        this._snackBar.open('Authorization is successful ✔ 🥳 🎈', undefined, { duration: 3000, verticalPosition: 'top' })
+      }, error => {
+        this.isLoading = false
+        this.loginFormGroup.reset()
+        this._snackBar.open('Authorization is failed 😢', undefined, { duration: 3000, verticalPosition: 'top' })
+      })
   }
 }

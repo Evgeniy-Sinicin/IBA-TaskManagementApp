@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OwnersComponent } from './owners.component';
+import { AddingTaskDialogComponent } from './adding-task-dialog.component';
 
-describe('OwnersComponent', () => {
-  let component: OwnersComponent;
-  let fixture: ComponentFixture<OwnersComponent>;
+describe('AddingTaskDialogComponent', () => {
+  let component: AddingTaskDialogComponent;
+  let fixture: ComponentFixture<AddingTaskDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OwnersComponent ]
+      declarations: [ AddingTaskDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OwnersComponent);
+    fixture = TestBed.createComponent(AddingTaskDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

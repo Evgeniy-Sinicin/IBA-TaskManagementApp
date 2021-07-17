@@ -1,0 +1,123 @@
+mat-card {
+    padding       : 1em;
+    opacity       : 90%;
+    display       : flex;
+    flex-direction: column;
+    align-items   : center;
+    overflow      : hidden;
+}
+
+th.mat-header-cell:first-of-type,
+th.mat-header-cell:last-of-type,
+td.mat-cell:first-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:first-of-type,
+td.mat-footer-cell:last-of-type {
+    padding   : 0px 0px;
+    text-align: center;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    padding   : 0px 0px;
+    width     : 100px;
+    text-align: center;
+}
+
+mat-progress-bar {
+    margin-top: 0px;
+}
+
+.mat-card-header .mat-card-title {
+    margin: 0px;
+}
+
+.mat-elevation-z8 {
+    display        : flex;
+    flex-direction : column;
+    max-height     : 440px;
+    overflow-y     : auto;
+    justify-content: center;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width    : 100%;
+}
+
+.truncate-cell {
+    max-width    : 60px;
+    white-space  : nowrap;
+    overflow     : hidden;
+    text-overflow: ellipsis;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+    padding            : 0px;
+    margin             : 0px;
+}
+
+.example-element-detail {
+    max-height    : 150px;
+    overflow      : auto;
+    display       : flex;
+    flex-direction: column;
+}
+
+::-webkit-scrollbar {
+    width      : 0;
+    /* Remove scrollbar space */
+    background : transparent;
+    /* Optional: just make scrollbar invisible */
+}
+
+.example-element-diagram {
+    min-width: 80px;
+    border   : 2px solid black;
+    padding  : 8px;
+}
+
+.example-element-symbol {
+    line-height: normal;
+}
+
+.example-element-description {
+    padding: 10px;
+}
+
+.example-element-description-attribution {
+    opacity: 0.5;
+}
+
+.hidden-detail-row {
+    height: 0px;
+    min-height: 0px;
+}
+
+.detail-row-action {
+    margin: 5px 0px;
+}
+
+.mat-form-field-flex {
+    padding-top: 0px !important;
+}
+
+.mat-header-row, .example-element-row {
+    height: 30px;
+}
+
+.action {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

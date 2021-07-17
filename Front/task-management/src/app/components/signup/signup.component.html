@@ -63,7 +63,8 @@
           <mat-label>Password</mat-label>
           <input matInput [type]="isPasswordHidden ? 'password' : 'text'" matInput formControlName="passwordCtrl"
             [errorStateMatcher]="passwordMatcher" required>
-          <mat-error *ngIf="passwordFormGroup.hasError('required', 'passwordCtrl') && !passwordFormGroup.hasError('notSame')">
+          <mat-error
+            *ngIf="passwordFormGroup.hasError('required', 'passwordCtrl') && !passwordFormGroup.hasError('notSame')">
             Password is <strong>required</strong>!
           </mat-error>
           <mat-error *ngIf="passwordFormGroup.hasError('notSame')">
@@ -110,71 +111,12 @@
         <button mat-button matStepperPrevious>◀ Back</button>
         <button mat-button (click)="stepper.reset()">Reset ↩</button>
       </div>
+
+      <mat-progress-bar [style.visibility]="isLoading ? 'visible' : 'hidden'" class="mat-progress-bar-background"
+        mode="buffer"></mat-progress-bar>
+
     </mat-step>
 
   </mat-stepper>
 
 </mat-card>
-
-<!-- <mat-card>
-
-    <mat-card-title class="text-align-center">Sign Up</mat-card-title>
-
-    <mat-form-field class="form-field">
-        <mat-label>Phone</mat-label>
-        <input type="phone" matInput placeholder="+375291234567" #phone>
-    </mat-form-field>
-
-    <mat-form-field class="form-field">
-        <mat-label>Email</mat-label>
-        <input type="email" matInput placeholder="user@email.com" #email>
-    </mat-form-field>
-
-    <mat-form-field class="form-field">
-        <mat-label>Password</mat-label>
-        <input type="password" matInput #password>
-    </mat-form-field>
-
-    <mat-form-field class="form-field">
-        <mat-label>Password confirm</mat-label>
-        <input type="password" matInput #passwordConfirm>
-    </mat-form-field>
-
-    <button mat-raised-button (click)="clickSignUpButton(phone.value, email.value, password.value, passwordConfirm.value)">
-        Sign Up
-        <mat-icon>person_add</mat-icon>
-    </button>
-
-</mat-card> -->
-
-<!-- <mat-card *ngIf="!isLoggedIn && isRegisterButtonClicked">
-
-      <mat-card-title class="text-align-center">Sign Up</mat-card-title>
-
-      <mat-form-field class="form-field">
-        <mat-label>Phone</mat-label>
-        <input type="phone" matInput placeholder="+375291234567" #phone>
-      </mat-form-field>
-
-      <mat-form-field class="form-field">
-        <mat-label>Email</mat-label>
-        <input type="email" matInput placeholder="user@email.com" #email>
-      </mat-form-field>
-
-      <mat-form-field class="form-field">
-        <mat-label>Password</mat-label>
-        <input type="password" matInput #password>
-      </mat-form-field>
-
-      <mat-form-field class="form-field">
-        <mat-label>Password confirm</mat-label>
-        <input type="password" matInput #passwordConfirm>
-      </mat-form-field>
-
-      <button mat-raised-button
-        (click)="register(phone.value, email.value, password.value, passwordConfirm.value); isLoginButtonClicked = true; isRegisterButtonClicked = false;">
-        Sign Up
-        <mat-icon>person_add</mat-icon>
-      </button>
-
-    </mat-card> -->

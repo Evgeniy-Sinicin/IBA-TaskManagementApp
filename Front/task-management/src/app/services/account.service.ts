@@ -12,14 +12,14 @@ import { WEB_API_URL } from '../app-injection-tokens';
 export class AccountService {
 
   constructor(
-    private http: HttpClient,
-    @Inject(WEB_API_URL) private apiUrl: string,
-    private jwtHelper: JwtHelperService,
-    private router: Router,
+    private _http: HttpClient,
+    @Inject(WEB_API_URL) private _apiUrl: string,
+    private _jwtHelper: JwtHelperService,
+    private _router: Router,
   ) { }
 
   register(phone: string, email: string, password: string, passwordConfirm: string): Observable<unknown> {
-    return this.http.put<unknown>(`${this.apiUrl}api/auth/register`, {
+    return this._http.put<unknown>(`${this._apiUrl}api/auth/register`, {
       phone,
       email,
       password,

@@ -18,6 +18,10 @@ mat-form-field {
     margin-block-end: .5em;
 }
 
+mat-progress-bar {
+    margin-top: 15px;
+}
+
 button {
     cursor: url(../../../images/Cursor.png), auto;
 }

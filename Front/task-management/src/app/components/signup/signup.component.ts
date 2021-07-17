@@ -17,6 +17,7 @@ import { PasswordErrorStateMatcher } from 'src/app/error-state-matchers/password
   }]
 })
 export class SignupComponent implements OnInit {
+
   phoneFormGroup: FormGroup
   emailFormGroup: FormGroup
   passwordFormGroup: FormGroup
@@ -24,6 +25,7 @@ export class SignupComponent implements OnInit {
   passwordMatcher = new PasswordErrorStateMatcher()
   isPasswordHidden = true
   isPasswordConfirgHidden = true
+  isLoading = false
 
   @ViewChild('stepper')
   private _stepper!: MatStepper;
@@ -66,15 +68,18 @@ export class SignupComponent implements OnInit {
   }
 
   clickSignUpButton() {
+    this.isLoading = true
     this._accountService.register(
     this.phoneCtrl.value,
     this.emailCtrl.value,
     this.passwordFormGroup.controls.passwordCtrl.value,
     this.passwordFormGroup.controls.passwordCtrl.value)
     .subscribe(res => {
+      this.isLoading = false
       this._router.navigate(['login'])
       this._snackBar.open('Registration is successful ✔ 🥳 🎈', undefined, { duration: 3000, verticalPosition: 'top' })
     }, error => {
+      this.isLoading = false
       this._stepper.reset()
       this._snackBar.open('Registration is failed 😢', undefined, { duration: 3000, verticalPosition: 'top' })
     })
