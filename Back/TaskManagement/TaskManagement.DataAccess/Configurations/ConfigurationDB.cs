@@ -2,10 +2,10 @@
 {
     public class ConfigurationDB
     {
-        public string Database_Name { get; set; }
-        public string Account_Collection_Name { get; set; }
-        public string Task_Collection_Name { get; set; }
-        public string Connection_String { get; set; }
+        public string DatabaseName { get; set; }
+        public string AccountCollectionName { get; set; }
+        public string TaskCollectionName { get; set; }
+        public string ConnectionString { get; set; }
 
     }
 }

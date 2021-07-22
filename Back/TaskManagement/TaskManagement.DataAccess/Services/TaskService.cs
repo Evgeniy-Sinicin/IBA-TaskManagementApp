@@ -15,9 +15,9 @@ namespace TaskManagement.DataAccess.Services
 
         public TaskService(IOptions<ConfigurationDB> config)
         {
-            var mongoClient = new MongoClient(config.Value.Connection_String);
-            var db = mongoClient.GetDatabase(config.Value.Database_Name);
-            _collection = db.GetCollection<Task>(config.Value.Task_Collection_Name);
+            var mongoClient = new MongoClient(config.Value.ConnectionString);
+            var db = mongoClient.GetDatabase(config.Value.DatabaseName);
+            _collection = db.GetCollection<Task>(config.Value.TaskCollectionName);
         }
 
         public List<Task> GetAll()

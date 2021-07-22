@@ -4,14 +4,21 @@
     cursor: url(./images/Cursor.png), auto !important;
 }
 
-html,
+html {
+    height: 100%;
+    width : 100%;
+}
+
+/* html,
 body {
     height  : 100%;
     margin  : 0%;
     overflow: hidden;
-}
+} */
 
 body {
+    height                   : 100%;
+    margin                   : 0% !important;
     display                  : flex;
     flex-direction           : column;
     font-family              : Roboto, "Helvetica Neue", sans-serif;
@@ -30,6 +37,7 @@ app-root {
 .mat-simple-snackbar {
     justify-content: center !important;
     color          : white;
+    font-size      : 14pt;
 }
 
 .mat-horizontal-content-container {

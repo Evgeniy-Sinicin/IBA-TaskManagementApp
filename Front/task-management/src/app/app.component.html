@@ -8,29 +8,14 @@
 
   <span class="spacer"></span>
 
-  <!-- <button *ngIf="!isLoggedIn" mat-raised-button class="button-nav" (click)="clickLoginButton()">
-    Login
-    <mat-icon>login</mat-icon>
-  </button>
-
-  <button *ngIf="!isLoggedIn" mat-raised-button class="button-nav" (click)="clickRegisterButton()">
-    Sign Up
-    <mat-icon>person_add</mat-icon>
-  </button> -->
-
   <button *ngIf="isLoggedIn" mat-raised-button class="button-nav" (click)="logout()">
     Logout
-    <mat-icon>logout</mat-icon>
+    <mat-icon class="logout">logout</mat-icon>
   </button>
 
 </mat-toolbar>
 
 <div class="container">
-
-  <!-- <div class="topnav">
-    <a [routerLink]="['']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">TasksStore</a>
-    <a [routerLink]="['/owners']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngIf="isLoggedIn">Owners</a>
-  </div> -->
 
   <router-outlet></router-outlet>
 

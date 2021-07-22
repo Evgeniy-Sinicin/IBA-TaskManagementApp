@@ -12,9 +12,9 @@
       "commandName": "IISExpress",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DATABASE_NAME": "TaskManagementDB",
-        "ACCOUNT_COLLECTION_NAME": "Accounts",
-        "TASK_COLLECTION_NAME": "Tasks"
+        "databaseName": "TaskManagementDB",
+        "accountCollectionName": "Accounts",
+        "taskCollectionName": "Tasks"
       }
     },
     "TaskManagement.Web": {
@@ -22,9 +22,9 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DATABASE_NAME": "TaskManagementDB",
-        "ACCOUNT_COLLECTION_NAME": "Accounts",
-        "TASK_COLLECTION_NAME": "Tasks"
+        "databaseName": "TaskManagementDB",
+        "accountCollectionName": "Accounts",
+        "taskCollectionName": "Tasks"
       },
       "applicationUrl": "http://localhost:5000"
     }

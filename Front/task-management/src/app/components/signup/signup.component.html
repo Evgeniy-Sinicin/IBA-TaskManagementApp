@@ -1,16 +1,18 @@
 <mat-card>
 
-  <mat-card-title class="text-align-center">Sign Up</mat-card-title>
+  <mat-card-title class="text-align-center">Sign Up 📝</mat-card-title>
 
-  <mat-stepper linear #stepper>
+  <mat-stepper orientation="vertical" linear #stepper>
 
     <mat-step [stepControl]="phoneFormGroup" errorMessage="Phone is required!">
       <form [formGroup]="phoneFormGroup">
-        <ng-template matStepLabel>Fill out your phone 📱</ng-template>
+        <ng-template matStepLabel>
+          <span>Fill out your phone 📱</span>
+        </ng-template>
 
         <mat-form-field appearance="fill">
           <mat-label>Phone</mat-label>
-          <input type="tel" matInput placeholder="+375291234567" formControlName="phoneCtrl" required>
+          <input type="tel" matInput placeholder="+375291234567" formControlName="phoneCtrl" maxlength="13" required>
           <button *ngIf="this.phoneFormGroup.controls.phoneCtrl.value" matSuffix mat-icon-button aria-label="Clear"
             (click)="this.phoneFormGroup.controls.phoneCtrl.setValue('')">
             <mat-icon>close</mat-icon>
@@ -32,7 +34,9 @@
 
     <mat-step [stepControl]="emailFormGroup" errorMessage="Email is required!">
       <form [formGroup]="emailFormGroup">
-        <ng-template matStepLabel>Fill out your email 💌</ng-template>
+        <ng-template matStepLabel>
+          <span>Fill out your email 💌</span>
+        </ng-template>
 
         <mat-form-field appearance="fill">
           <mat-label>Email</mat-label>
@@ -57,7 +61,9 @@
 
     <mat-step [stepControl]="passwordFormGroup" errorMessage="Password is required!">
       <form [formGroup]="passwordFormGroup">
-        <ng-template matStepLabel>Fill out your password 🔐</ng-template>
+        <ng-template matStepLabel>
+          <span>Fill out your password 🔐</span>
+        </ng-template>
 
         <mat-form-field appearance="fill">
           <mat-label>Password</mat-label>
@@ -98,7 +104,9 @@
     </mat-step>
 
     <mat-step>
-      <ng-template matStepLabel>Done ✔</ng-template>
+      <ng-template matStepLabel>
+        <span>Done ✔</span>
+      </ng-template>
 
       <p>You are now done 🥳 🎈</p>
 

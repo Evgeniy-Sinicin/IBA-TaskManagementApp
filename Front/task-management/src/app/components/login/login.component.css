@@ -1,27 +1,52 @@
-.text-align-center {
-    text-align: center;
-}
-
 mat-card {
-    text-align    : center;
-    box-shadow    : none;
-    opacity       : 90%;
+    top           : 10px;
     display       : flex;
+    text-align    : center;
     flex-direction: column;
     align-items   : stretch;
 }
 
+mat-card-title {
+    font-size: 42pt;
+}
+
 mat-form-field {
-    width: 15em;
-    display: block;
+    width             : 30em;
+    display           : block;
     margin-block-start: .5em;
-    margin-block-end: .5em;
+    margin-block-end  : .5em;
 }
 
 mat-progress-bar {
     margin-top: 15px;
 }
 
+input,
 button {
-    cursor: url(../../../images/Cursor.png), auto;
+    font-size: 21pt;
+}
+
+button {
+    height    : 64px;
+    margin-top: 10px;
+}
+
+mat-error,
+mat-hint {
+    font-size: 12pt;
+}
+
+mat-progress-bar {
+    left     : 25%;
+    width    : 50%;
+    transform: scale(2);
+}
+
+mat-icon {
+    margin-left: 16px;
+    transform: scale(2);
+}
+
+.text-align-center {
+    text-align: center;
 }

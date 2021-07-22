@@ -1,17 +1,40 @@
 mat-card {
-    display: flex;
+    display       : flex;
     flex-direction: column;
-    align-items: center;
+    align-items   : center;
+}
+
+mat-card-title {
+    font-size: 42pt;
+}
+
+mat-card-actions {
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 mat-form-field {
-    max-width: 200px;
-    display: block;
+    min-width: 400px;
+    display  : block;
+    margin: 10px 0px;
 }
 
 textarea {
-    height: 200px;
+    height    : 400px;
     min-height: 25px;
-    max-height: 200px;
-    overflow: auto;
+    max-height: 600px;
+    overflow  : auto;
+}
+
+input,
+textarea,
+button {
+    font-size: 21pt;
+}
+
+mat-label,
+mat-error {
+    font-size: 14pt;
 }
