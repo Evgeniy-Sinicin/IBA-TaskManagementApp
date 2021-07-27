@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { IntlModule } from "@progress/kendo-angular-intl";
+import { DateInputsModule } from "@progress/kendo-angular-dateinputs";
+import { LabelModule } from "@progress/kendo-angular-label";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,6 +22,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { HomeComponent } from './components/home/home.component';
 import { TasksComponent } from './components/tasks/tasks.component';
@@ -34,6 +38,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { Account } from './models/account';
 import { AddingTaskDialogComponent } from './components/adding-task-dialog/adding-task-dialog.component';
 import { UpdateTaskDialogComponent } from './components/update-task-dialog/update-task-dialog.component';
+import { DatePipe } from '@angular/common';
 
 export function tokenGetter() {
   var jsonAcc = localStorage.getItem(ACCOUNT)
@@ -81,6 +86,9 @@ export function emailGetter() {
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    IntlModule,
+    LabelModule,
+    DateInputsModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
@@ -99,6 +107,8 @@ export function emailGetter() {
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
+    MatSelectModule,
+    MatSlideToggleModule,
 
     JwtModule.forRoot({
       config: {
@@ -110,7 +120,8 @@ export function emailGetter() {
   providers: [{
     provide: WEB_API_URL,
     useValue: environment.webApi
-  }],
+  },
+    DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,6 +7,7 @@ using Task = TaskManagement.Web.Models.Task;
 using TaskDB = TaskManagement.DataAccess.Models.Task;
 using AutoMapper;
 using TaskManagement.DataAccess.Interfaces;
+using System;
 
 namespace TaskManagement.Web.Controllers
 {
@@ -61,6 +62,8 @@ namespace TaskManagement.Web.Controllers
             {
                 return BadRequest("You aren't allowed to add task to foreign user");
             }
+
+            task.StartDate = DateTime.Now;
 
             _service.Add(_mapper.Map<TaskDB>(task));
 

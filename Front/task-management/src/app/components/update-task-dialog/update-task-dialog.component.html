@@ -4,9 +4,18 @@
 
     <form [formGroup]="taskFormGroup">
         <mat-form-field appearance="fill">
+            <mat-label>Priority</mat-label>
+            <mat-select [value]=priority>
+                <mat-option (click)="choosePriority(p)" *ngFor="let p of priorities" [value]="p">
+                    {{priorityToString(p.toString())}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
             <mat-label>Name </mat-label>
-            <input type="text" matInput placeholder="Name" formControlName="nameCtrl" [ngModel]="data.name"
-                required #name>
+            <input type="text" matInput placeholder="Name" formControlName="nameCtrl" [ngModel]="data.name" required
+                #name>
             <button *ngIf="this.taskFormGroup.controls.nameCtrl.value" matSuffix mat-icon-button aria-label="Clear"
                 (click)="this.taskFormGroup.controls.nameCtrl.setValue('')">
                 <mat-icon>close</mat-icon>
@@ -21,6 +30,15 @@
             <textarea matInput type="text" matInput formControlName="descriptionCtrl" [ngModel]="data.description"
                 #description></textarea>
         </mat-form-field>
+
+        <div class="date-time-input">
+            <mat-label>⌚ Finish time: </mat-label>
+            <kendo-datetimepicker color="premium" [(value)]="finishDate"></kendo-datetimepicker>
+        </div>
+
+        <mat-slide-toggle color="primary" [checked]="isNeedNotify" (change)="isNeedNotify = !isNeedNotify">
+            Notify me 🔔
+        </mat-slide-toggle>
     </form>
 
     <span>

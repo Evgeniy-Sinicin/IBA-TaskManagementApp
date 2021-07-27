@@ -4,6 +4,15 @@
 
     <form [formGroup]="taskFormGroup">
         <mat-form-field appearance="fill">
+            <mat-label>Priority</mat-label>
+            <mat-select [value]=priority>
+                <mat-option (click)="choosePriority(p)" *ngFor="let p of priorities" [value]="p">
+                    {{priorityToString(p.toString())}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
             <mat-label>Name </mat-label>
             <input type="text" matInput placeholder="Name" formControlName="nameCtrl" required #name>
             <button *ngIf="this.taskFormGroup.controls.nameCtrl.value" matSuffix mat-icon-button aria-label="Clear"
@@ -18,11 +27,16 @@
         <mat-form-field appearance="fill">
             <mat-label>Description</mat-label>
             <textarea matInput type="text" matInput formControlName="descriptionCtrl" #description></textarea>
-            <!-- <button *ngIf="this.taskFormGroup.controls.descriptionCtrl.value" matSuffix mat-icon-button
-                aria-label="Clear" (click)="this.taskFormGroup.controls.descriptionCtrl.setValue('')">
-                <mat-icon>close</mat-icon>
-            </button> -->
         </mat-form-field>
+
+        <div class="date-time-input">
+            <mat-label>⌚ Finish time: </mat-label>
+            <kendo-datetimepicker color="premium" [(value)]="finishTime"></kendo-datetimepicker>
+        </div>
+
+        <mat-slide-toggle color="primary" (click)="switchNotifyButton()">
+            Notify me 🔔
+        </mat-slide-toggle>
     </form>
 
     <mat-card-actions>

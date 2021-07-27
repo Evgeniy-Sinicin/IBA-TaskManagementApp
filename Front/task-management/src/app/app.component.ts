@@ -1,5 +1,7 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { interval } from 'rxjs';
 import { AccountService } from './services/account.service';
 import { AuthService } from './services/auth.service';
 
@@ -12,13 +14,20 @@ export class AppComponent {
   private _isLoginButtonClicked: boolean;
   private _isRegisterButtonClicked: boolean;
 
+  date = new Date()
+
   constructor(
     private _authService: AuthService,
     private _accountService: AccountService,
     private _router: Router,
+    public datePipe: DatePipe
     ) { 
     this._isLoginButtonClicked = false;
     this._isRegisterButtonClicked = false;
+
+    interval(1000).subscribe(res => {
+      this.date = new Date()
+    })
   }
 
   public get isLoggedIn(): boolean {

@@ -41,13 +41,10 @@ input {
     font-size: 21pt;
 }
 
-table {
-    min-width: 400px;
-}
-
 td,
 th {
-    min-width  : 400px;
+    min-width  : 250px;
+    max-width  : 250px;
     white-space: normal;
     word-wrap  : break-word;
 }
@@ -64,6 +61,18 @@ tr.example-element-row:not(.example-expanded-row):active {
     background: #efefef;
 }
 
+.gray-text {
+    color: grey;
+}
+
+.gold-text {
+    color: goldenrod;
+}
+
+.red-text {
+    color: red;
+}
+
 .mat-card-title {
     font-size: 42pt;
 }
@@ -73,7 +82,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .mat-elevation-z8 {
-    min-width      : 400px;
+    min-width      : 600px;
     display        : flex;
     flex-direction : column;
     overflow-y     : auto;
@@ -87,12 +96,12 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 ::ng-deep .mat-paginator-container {
-    display: flex;
-    align-items: center;
+    display        : flex;
+    align-items    : center;
     justify-content: space-between !important;
-    padding: 0 8px;
-    flex-wrap: wrap-reverse;
-    width: 100%;
+    padding        : 0 8px;
+    flex-wrap      : wrap-reverse;
+    width          : 100%;
 }
 
 ::ng-deep .mat-form-field-infix {
@@ -114,10 +123,31 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .example-element-detail {
-    max-height    : 250px;
-    overflow      : auto;
+    overflow         : auto;
+}
+
+.example-element-detail-content {
+    /* max-width     : 600px; */
     display       : flex;
     flex-direction: column;
+    align-items   : flex-start;
+    align-content : center;
+}
+
+.example-element-diagram {
+    max-height           : 200px;
+    display              : flex;
+    justify-content      : start;
+    border               : 2px solid black;
+    padding              : 8px;
+    overflow-y           : scroll;
+}
+
+.detail-content-field {
+    text-align: start;
+    /* max-width: 475px;
+    min-width: 475px; */
+    hyphens: auto;
 }
 
 ::-webkit-scrollbar {
@@ -125,12 +155,6 @@ tr.example-element-row:not(.example-expanded-row):active {
     /* Remove scrollbar space */
     background : transparent;
     /* Optional: just make scrollbar invisible */
-}
-
-.example-element-diagram {
-    min-width: 80px;
-    border   : 2px solid black;
-    padding  : 8px;
 }
 
 .example-element-symbol {
@@ -167,4 +191,18 @@ tr.example-element-row:not(.example-expanded-row):active {
     display        : flex;
     flex-direction : row;
     justify-content: space-between;
+}
+
+.overdue,
+.in-process {
+    font-size: xx-large;
+    font-weight: bolder;
+}
+
+.overdue {
+    color: orangered;
+}
+
+.in-process {
+    color: limegreen;
 }

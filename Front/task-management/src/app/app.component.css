@@ -10,34 +10,46 @@
     margin: 0px 0px 0px 15px;
 }
 
-button {
-    cursor: url(../images/Cursor.png), auto;
-}
-
 mat-toolbar {
+    display         : flex;
+    flex-direction  : row;
+    justify-content : space-between;
     height          : 10%;
     padding         : 0px;
     opacity         : .9;
     background-color: white;
 }
 
-span, .mat-raised-button {
+mat-label {
     font-size: 28pt;
+    margin-left: 16px;
+}
+
+span {
+    margin-right: 16px;
+    font-size: 32pt;
 }
 
 .mat-raised-button {
-    height: 64px;
+    font-size: 28pt;
+    height      : 64px;
     margin-right: 16px;
 }
 
+mat-icon.home {
+    font-size: 16pt;
+    margin-left: 8px;
+    transform  : scale(2);
+}
+
 mat-icon.logout {
-    margin-left: 16px;
-    transform: scale(2);
+    font-size: 16pt;
+    margin-left: 8px;
+    transform  : scale(2);
 }
 
 .mat-icon-button {
-    margin: 0px 24px;
-    transform: scale(2);
+    margin-left: 10px;
 }
 
 .container {

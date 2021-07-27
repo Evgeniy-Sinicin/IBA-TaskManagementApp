@@ -6,3 +6,4 @@ D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.DataAccess\obj\Debug\netc
 D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.DataAccess\obj\Debug\netcoreapp3.1\TaskManagement.DataAccess.csproj.CoreCompileInputs.cache
 D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.DataAccess\obj\Debug\netcoreapp3.1\TaskManagement.DataAccess.dll
 D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.DataAccess\obj\Debug\netcoreapp3.1\TaskManagement.DataAccess.pdb
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.DataAccess\obj\Debug\netcoreapp3.1\TaskManagement.DataAccess.csprojAssemblyReference.cache
