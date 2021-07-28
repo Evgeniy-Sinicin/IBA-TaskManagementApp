@@ -1,15 +1,16 @@
 <mat-toolbar>
 
-  <button (click)="clickHomeButton()" mat-icon-button>
-    <mat-icon class="home">home</mat-icon>
-    <mat-label>Home</mat-label>
+  <button (click)="clickHomeButton()" mat-button>
+    <mat-label>🏡 Home</mat-label>
   </button>
 
-  <span>{{date | date:'dd/MM/yyyy HH:mm:ss'}}</span>
+  <div class="date">
+    <span>{{date | date:'HH:mm:ss'}}</span>
+    <span>{{date | date:'dd/MM/yyyy'}}</span>
+  </div>
 
-  <button *ngIf="isLoggedIn" mat-raised-button class="button-nav" (click)="logout()">
-    Logout
-    <mat-icon class="logout">logout</mat-icon>
+  <button (click)="logout()" *ngIf="isLoggedIn" mat-button>
+    <mat-label>Logout 🏃‍♂️</mat-label>
   </button>
 
 </mat-toolbar>

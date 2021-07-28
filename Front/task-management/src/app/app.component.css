@@ -1,15 +1,3 @@
-.form-field {
-    margin-right: 20px;
-}
-
-.spacer {
-    flex: 1 1 auto;
-}
-
-.button-nav {
-    margin: 0px 0px 0px 15px;
-}
-
 mat-toolbar {
     display         : flex;
     flex-direction  : row;
@@ -20,36 +8,28 @@ mat-toolbar {
     background-color: white;
 }
 
-mat-label {
-    font-size: 28pt;
-    margin-left: 16px;
-}
-
 span {
-    margin-right: 16px;
+    margin   : 5px 0px;
     font-size: 32pt;
 }
 
-.mat-raised-button {
+mat-label {
     font-size: 28pt;
-    height      : 64px;
-    margin-right: 16px;
 }
 
-mat-icon.home {
-    font-size: 16pt;
-    margin-left: 8px;
-    transform  : scale(2);
+.date {
+    display       : flex;
+    flex-direction: column;
+    align-items   : center;
+    margin        : 0px 16px;
 }
 
-mat-icon.logout {
-    font-size: 16pt;
-    margin-left: 8px;
-    transform  : scale(2);
-}
-
-.mat-icon-button {
-    margin-left: 10px;
+.mat-button {
+    height   : 50%;
+    width    : fit-content;
+    min-width: fit-content;
+    max-width: fit-content;
+    margin   : 0px 20px;
 }
 
 .container {
@@ -58,13 +38,4 @@ mat-icon.logout {
     opacity        : .9;
     display        : flex;
     justify-content: center;
-    /* margin-top  : 10px;
-    height         : 80%;
-    display        : flex;
-    flex-direction : column;
-    align-items    : center; */
-}
-
-.component {
-    margin: 5px;
 }

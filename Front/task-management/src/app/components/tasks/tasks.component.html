@@ -6,10 +6,42 @@
 
     <mat-card-content>
 
-        <mat-form-field appearance="standard">
-            <mat-label>Filter by Name</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" maxlength="50" #input>
-        </mat-form-field>
+        <div class="filters">
+
+            <mat-form-field class="filter" appearance="standard">
+                <mat-label>Filter by Name</mat-label>
+                <input [value]="textFilter" matInput (keyup)="applyTextFilter($event)" placeholder="Ex. Mia"
+                    maxlength="50" #input>
+            </mat-form-field>
+
+            <div class="filter">
+
+                <kendo-daterange #daterange>
+
+                    <label class="filter-label">
+                        <span>Start Date</span>
+                        <kendo-dateinput (valueChange)="onChangeStartDate($event)" [(value)]="dateRange.start"
+                            format="dd/MM/yyyy" kendoDateRangeStartInput></kendo-dateinput>
+                    </label>
+
+                    <label class="filter-label">
+                        <span>End Date</span>
+                        <kendo-dateinput (valueChange)="onChangeFinishDate($event)" [(value)]="dateRange.end"
+                            format="dd/MM/yyyy" kendoDateRangeEndInput></kendo-dateinput>
+                    </label>
+
+                </kendo-daterange>
+
+                <div class="clear-filters-button">
+                    <button mat-icon-button (click)="clearFilters()"
+                        [disabled]="!dateRange.start && !dateRange.end && isEmptyTextFilter">
+                        ❌
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
 
         <div class="mat-elevation-z8">
 
@@ -30,7 +62,8 @@
 
                 <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef> Status </th>
-                    <td mat-cell *matCellDef="let row" class="truncate-cell" [class.overdue]="isOverdue(row)" [class.in-process]="!isOverdue(row)">{{isOverdue(row) ? '•' : '•'}}</td>
+                    <td mat-cell *matCellDef="let row" class="truncate-cell" [class.overdue]="isOverdue(row)"
+                        [class.in-process]="!isOverdue(row)">{{isOverdue(row) ? '•' : '•'}}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="priority">
@@ -57,7 +90,8 @@
 
                 <ng-container matColumnDef="finishDate">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Finish </th>
-                    <td mat-cell *matCellDef="let row" class="truncate-cell">{{row.finishDate | date:'dd/MM/yyyy HH:mm'}}</td>
+                    <td mat-cell *matCellDef="let row" class="truncate-cell">{{row.finishDate | date:'dd/MM/yyyy
+                        HH:mm'}}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="expandedDetail">
@@ -75,9 +109,11 @@
                                             [class.red-text]="row.priority == '2'">[ {{Priority(row.priority)}} ⚠ ]</b>
                                     </div>
                                     <div class="detail-content-field"><b>📃 Description: </b>{{row.description}}</div>
-                                    <div class="detail-content-field"><b>⏳ Start Date: </b>{{Date(row.startDate) | date:'dd/MM/yyyy HH:mm:ss'}}
+                                    <div class="detail-content-field"><b>⏳ Start Date: </b>{{Date(row.startDate) |
+                                        date:'dd/MM/yyyy HH:mm:ss'}}
                                     </div>
-                                    <div class="detail-content-field"><b>⌛ Finish Date: </b>{{Date(row.finishDate) | date:'dd/MM/yyyy HH:mm:ss'}}
+                                    <div class="detail-content-field"><b>⌛ Finish Date: </b>{{Date(row.finishDate) |
+                                        date:'dd/MM/yyyy HH:mm:ss'}}
                                     </div>
                                     <div class="detail-content-field"><b>🏃 Left: </b>{{getDifference(row)}}</div>
                                 </div>

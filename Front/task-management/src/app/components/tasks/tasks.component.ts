@@ -1,12 +1,14 @@
 import { animate, state, style, transition, trigger } from '@angular/animations'
 import { DatePipe } from '@angular/common'
-import { AfterViewInit, ViewChild } from '@angular/core'
+import { AfterViewInit, Input, ViewChild } from '@angular/core'
 import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatPaginator } from '@angular/material/paginator'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatSort } from '@angular/material/sort'
 import { MatTableDataSource } from '@angular/material/table'
+import { KendoInput } from '@progress/kendo-angular-common'
+import { DateRangeService, DateRangeStartInputDirective } from '@progress/kendo-angular-dateinputs'
 import { interval } from 'rxjs'
 import { AuthService } from 'src/app/services/auth.service'
 import { TaskService } from 'src/app/services/task.service'
@@ -32,12 +34,22 @@ import { UpdateTaskDialogComponent } from '../update-task-dialog/update-task-dia
 })
 export class TasksComponent {
 
+  @ViewChild("daterange", { read: DateRangeService })
+  dateRangeService!: DateRangeService;
+  dateRange = {
+    start: null as any,
+    end: null as any,
+  };
+
+  private _tasks!: Task[]
+
   date: Date = new Date()
 
   displayedColumns: string[] = ['id', 'status', 'priority', 'name', 'description', 'userEmail', 'finishDate']
   dataSource!: MatTableDataSource<Task>
   expandedElement!: Task
   isLoading!: boolean
+  textFilter: string = ''
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -55,12 +67,65 @@ export class TasksComponent {
     })
   }
 
+  get isEmptyTextFilter() {
+    if (this.textFilter == ''){
+      return true
+    }
+
+    return false
+  }
+
   Date(date: string): string {
     return new Date(date).toLocaleString()
   }
 
   Priority(priority: string): string {
     return Priority[Number(priority)]
+  }
+
+  clearFilters() {
+    this.textFilter = ''
+    this.dataSource.filter = ''
+    this.dataSource.data = this._tasks
+
+    this.dateRange.start = ''
+    this.dateRange.end = ''
+  }
+
+  onChangeStartDate(date: Date) {
+    this.dateRange.start = date
+
+    if (this.dateRange.end == null) {
+      return
+    }
+
+    this.dataSource.data = this._tasks.filter(t =>
+      new Date(t.finishDate).getTime() > new Date(this.dateRange.start).getTime() && new Date(t.finishDate).getTime() < new Date(this.dateRange.end).getTime()
+    )
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage()
+    }
+  }
+
+  onChangeFinishDate(date: Date) {
+    this.dateRange.end = date
+
+    this.dateRange.end.setHours(23)
+    this.dateRange.end.setMinutes(59)
+    this.dateRange.end.setSeconds(59)
+
+    if (this.dateRange.start == null) {
+      return
+    }
+
+    this.dataSource.data = this._tasks.filter(t =>
+      new Date(t.finishDate).getTime() > new Date(this.dateRange.start).getTime() && new Date(t.finishDate).getTime() < new Date(this.dateRange.end).getTime()
+    )
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage()
+    }
   }
 
   changeNotificationStatus(task: Task) {
@@ -119,11 +184,11 @@ export class TasksComponent {
     this.isLoading = true
     this._taskService.getTasks().subscribe(res => {
       this.isLoading = false
+      this._tasks = res
       this.dataSource = new MatTableDataSource(res)
       this.dataSource.sort = this.sort
       this.dataSource.paginator = this.paginator
-
-      // console.log('Difference: ', this._datePipe.transform(new Date(new Date().valueOf() - new Date().valueOf()), 'dd/MM/yyyy hh:mm:ss'))
+      this.clearFilters()
     }, error => {
       this.isLoading = false
       this._snackBar.open('Table refreshing is failed 😢', undefined, { duration: 3000, verticalPosition: 'top' })
@@ -150,9 +215,9 @@ export class TasksComponent {
     })
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value
-    this.dataSource.filter = filterValue.trim().toLowerCase()
+  applyTextFilter(event: Event) {
+    this.textFilter = (event.target as HTMLInputElement).value
+    this.dataSource.filter = this.textFilter.trim().toLowerCase()
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage()
