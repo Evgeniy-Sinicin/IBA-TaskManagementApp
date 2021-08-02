@@ -1,0 +1,12 @@
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.EmailService\bin\Debug\netcoreapp3.1\TaskManagement.EmailService.deps.json
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.EmailService\bin\Debug\netcoreapp3.1\TaskManagement.EmailService.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.EmailService\bin\Debug\netcoreapp3.1\TaskManagement.EmailService.pdb
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.EmailService\obj\Debug\netcoreapp3.1\TaskManagement.EmailService.csprojAssemblyReference.cache
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.EmailService\obj\Debug\netcoreapp3.1\TaskManagement.EmailService.AssemblyInfoInputs.cache
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.EmailService\obj\Debug\netcoreapp3.1\TaskManagement.EmailService.AssemblyInfo.cs
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.EmailService\obj\Debug\netcoreapp3.1\TaskManagement.EmailService.csproj.CoreCompileInputs.cache
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.EmailService\obj\Debug\netcoreapp3.1\TaskManagement.EmailService.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.EmailService\obj\Debug\netcoreapp3.1\TaskManagement.EmailService.pdb
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.EmailService\bin\Debug\netcoreapp3.1\TaskManagement.DataAccess.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.EmailService\bin\Debug\netcoreapp3.1\TaskManagement.DataAccess.pdb
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.EmailService\obj\Debug\netcoreapp3.1\TaskManagement.EmailService.csproj.CopyComplete

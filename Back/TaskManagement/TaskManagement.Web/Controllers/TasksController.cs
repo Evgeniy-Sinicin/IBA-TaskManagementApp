@@ -8,6 +8,7 @@ using TaskDB = TaskManagement.DataAccess.Models.Task;
 using AutoMapper;
 using TaskManagement.DataAccess.Interfaces;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace TaskManagement.Web.Controllers
 {
@@ -19,7 +20,7 @@ namespace TaskManagement.Web.Controllers
         private readonly IMapper _mapper;
         private string UserEmail => User.Claims.Single(c => c.Type == ClaimTypes.Email).Value;
 
-        public TasksController(IService<TaskDB> service, IMapper mapper)
+        public TasksController(IService<TaskDB> service, IMapper mapper, ILogger<TasksController> logger)
         {
             _service = service;
             _mapper = mapper;
@@ -32,7 +33,7 @@ namespace TaskManagement.Web.Controllers
         {
             return Ok(_mapper.Map<List<Task>>(_service.GetAll()).Where(t => t.UserEmail.Equals(UserEmail)).ToList());
         }
-
+        
         [HttpGet]
         [Authorize]
         [Route("{id}")]

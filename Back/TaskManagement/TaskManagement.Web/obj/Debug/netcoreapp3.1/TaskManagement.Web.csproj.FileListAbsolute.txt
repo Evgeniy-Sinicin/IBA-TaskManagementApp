@@ -77,3 +77,10 @@ D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3
 D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\runtimes\linux\native\libmongocrypt.so
 D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\runtimes\osx\native\libmongocrypt.dylib
 D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\runtimes\win\native\mongocrypt.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\MailKit.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\MimeKit.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\NETCore.MailKit.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\TaskManagement.EmailService.dll
+D:\Study\IBA\Task 6\Back\TaskManagement\TaskManagement.Web\bin\Debug\netcoreapp3.1\TaskManagement.EmailService.pdb

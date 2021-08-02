@@ -1,16 +1,13 @@
 import { animate, state, style, transition, trigger } from '@angular/animations'
-import { DatePipe } from '@angular/common'
-import { AfterViewInit, Input, ViewChild } from '@angular/core'
-import { Component, OnInit } from '@angular/core'
+import { ViewChild } from '@angular/core'
+import { Component } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatPaginator } from '@angular/material/paginator'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatSort } from '@angular/material/sort'
 import { MatTableDataSource } from '@angular/material/table'
-import { KendoInput } from '@progress/kendo-angular-common'
-import { DateRangeService, DateRangeStartInputDirective } from '@progress/kendo-angular-dateinputs'
+import { DateRangeService } from '@progress/kendo-angular-dateinputs'
 import { interval } from 'rxjs'
-import { AuthService } from 'src/app/services/auth.service'
 import { TaskService } from 'src/app/services/task.service'
 import { __decorate } from 'tslib'
 import { Priority, Task } from '../../models/task'
@@ -43,13 +40,13 @@ export class TasksComponent {
 
   private _tasks!: Task[]
 
-  date: Date = new Date()
-
   displayedColumns: string[] = ['id', 'status', 'priority', 'name', 'description', 'userEmail', 'finishDate']
   dataSource!: MatTableDataSource<Task>
   expandedElement!: Task
   isLoading!: boolean
   textFilter: string = ''
+  subscribeButtonText: string = 'Subscribe 🔔';
+  unsubscribeButtonText: string = "🔔 Subscription isn't available for expired tasks 😥"
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -58,12 +55,11 @@ export class TasksComponent {
     private _taskService: TaskService,
     private _snackBar: MatSnackBar,
     private _dialog: MatDialog,
-    private _datePipe: DatePipe,
   ) {
     this.refreshTable()
 
     interval(1000).subscribe(res => {
-      this.date = new Date()
+      this.updateNotificationStatus()
     })
   }
 
@@ -75,12 +71,23 @@ export class TasksComponent {
     return false
   }
 
-  Date(date: string): string {
+  date(date: string): string {
     return new Date(date).toLocaleString()
   }
 
-  Priority(priority: string): string {
+  priority(priority: string): string {
     return Priority[Number(priority)]
+  }
+
+  updateNotificationStatus() {
+    this._tasks.forEach(t => {
+      if (t.isNeedNotify && new Date(t.finishDate).getTime() < Date.now()) {
+        t.isNeedNotify = false
+
+        var name = t.name.length >= 15 ? t.name.substring(0, 12) + '...' : t.name
+        this._snackBar.open(`Task «${name}» is expired 🔥😱🔥`, undefined, { duration: 3000, verticalPosition: 'top' })
+      }
+    })
   }
 
   clearFilters() {
@@ -147,8 +154,8 @@ export class TasksComponent {
     })
   }
 
-  isOverdue(task: Task) {
-    if (new Date(task.finishDate).getTime() - this.date.getTime() <= 0) {
+  isExpired(task: Task) {
+    if (new Date(task.finishDate).getTime() - Date.now() <= 0) {
       return true
     }
 
@@ -156,7 +163,7 @@ export class TasksComponent {
   }
 
   getDifference(task: Task): string {
-    var time = new Date(task.finishDate).getTime() - this.date.getTime()
+    var time = new Date(task.finishDate).getTime() - Date.now()
     var days = Math.floor(time / (1000 * 60 * 60 * 24))
 
     if (days < 0) {

@@ -1,6 +1,6 @@
 mat-card {
     top           : 10px;
-    padding       : 1em;
+    padding       : 0.25em;
     display       : flex;
     flex-direction: column;
     align-items   : center;
@@ -67,8 +67,8 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 kendo-daterange {
-    width: 100%;
-    display: flex;
+    width         : 100%;
+    display       : flex;
     flex-direction: row;
 }
 
@@ -139,7 +139,7 @@ kendo-daterange {
 }
 
 .example-element-detail {
-    overflow         : auto;
+    overflow: auto;
 }
 
 .example-element-detail-content {
@@ -151,19 +151,19 @@ kendo-daterange {
 }
 
 .example-element-diagram {
-    max-height           : 200px;
-    display              : flex;
-    justify-content      : start;
-    border               : 2px solid black;
-    padding              : 8px;
-    overflow-y           : scroll;
+    max-height     : 180px;
+    display        : flex;
+    justify-content: start;
+    border         : 2px solid black;
+    padding        : 8px;
+    overflow-y     : scroll;
 }
 
 .detail-content-field {
-    text-align: start;
+    text-align  : start;
     /* max-width: 475px;
-    min-width: 475px; */
-    hyphens: auto;
+    min-width   : 475px; */
+    hyphens     : auto;
 }
 
 ::-webkit-scrollbar {
@@ -211,7 +211,7 @@ kendo-daterange {
 
 .overdue,
 .in-process {
-    font-size: xx-large;
+    font-size  : xx-large;
     font-weight: bolder;
 }
 
@@ -224,29 +224,29 @@ kendo-daterange {
 }
 
 .filters {
-    display: flex;
+    display       : flex;
     flex-direction: row;
 }
 
 .filter {
-    min-width: 49%;
-    max-width: 49%;
-    width: 49%;
-    margin: 0px 5px;
-    display: flex;
+    min-width     : 49%;
+    max-width     : 49%;
+    width         : 49%;
+    margin        : 0px 5px;
+    display       : flex;
     flex-direction: row;
 }
 
 .filter-label {
-    width: 100%;
-    margin: 0px 15px;
-    display: flex;
+    width         : 100%;
+    margin        : 0px 15px;
+    display       : flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items   : flex-start;
 }
 
 .clear-filters-button {
     padding-top: 4%;
-    display: flex;
+    display    : flex;
     align-items: center;
 }

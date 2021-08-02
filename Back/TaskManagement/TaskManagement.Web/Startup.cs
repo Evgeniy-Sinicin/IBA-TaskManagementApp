@@ -7,6 +7,11 @@ using Microsoft.Extensions.Hosting;
 using TaskManagement.DataAccess.Configurations;
 using TaskManagement.DataAccess.Interfaces;
 using TaskManagement.DataAccess.Services;
+using TaskManagement.EmailService.Configurations;
+using TaskManagement.EmailService.EmailSenders;
+using TaskManagement.EmailService.Interfaces;
+using TaskManagement.Web.BackgroundFeatures;
+using TaskManagement.Web.Interfaces;
 using TaskManagement.Web.Models;
 
 namespace TaskManagement.Web
@@ -22,9 +27,15 @@ namespace TaskManagement.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var emailConfig = Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+
             services.Configure<ConfigurationDB>(Configuration);
+            services.AddHostedService<TimeService>();
             services.AddSingleton<IService<DataAccess.Models.Account>, AccountService>();
             services.AddSingleton<IService<DataAccess.Models.Task>, TaskService>();
+            services.AddSingleton<ITimeBasedNotifier, TimeBasedNotifier>();
+            services.AddSingleton(emailConfig);
+            services.AddSingleton<IEmailSender, EmailSender>();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
 
