@@ -33,7 +33,7 @@
 
         <div class="date-time-input">
             <mat-label>⌚ Finish time: </mat-label>
-            <kendo-datetimepicker color="premium" [(value)]="finishDate"></kendo-datetimepicker>
+            <kendo-datetimepicker format="dd/MM/yyyy HH:mm" color="premium" [(value)]="finishDate"></kendo-datetimepicker>
         </div>
 
         <mat-slide-toggle color="primary" [checked]="isNeedNotify" (change)="isNeedNotify = !isNeedNotify">

@@ -22,9 +22,14 @@
 <mat-card *ngIf="user && isLoggedIn">
     <mat-card-title>Menu</mat-card-title>
     <mat-divider></mat-divider>
-    <mat-card-actions>
-        <button (click)="clickTasksButton()" mat-raised-button>
+    <mat-card-actions class="menu">
+        <button class="menu-button" (click)="clickTasksButton()" mat-raised-button>
             Tasks
+            <mat-icon>task</mat-icon>
+        </button>
+
+        <button class="menu-button" (click)="clickSchedulerButton()" mat-raised-button>
+            Scheduler
             <mat-icon>today</mat-icon>
         </button>
     </mat-card-actions>

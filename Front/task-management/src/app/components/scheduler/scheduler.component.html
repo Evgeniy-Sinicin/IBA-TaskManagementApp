@@ -1,0 +1,88 @@
+<mat-card>
+
+    <mat-card-title>Scheduler 📅</mat-card-title>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+
+        <ejs-schedule #scheduleObj id="schedule" [views]="views" [selectedDate]="date" [eventSettings]="eventSettings"
+            [firstDayOfWeek]="1" (dragStop)="onDragStop($event)" (resizeStop)="onResizeStop($event)"
+            (actionComplete)="onActionComplete($event)" [(currentView)]="view">
+            <e-views>
+                <e-view option="Day"></e-view>
+                <e-view option="Week"></e-view>
+                <e-view option="Month"></e-view>
+                <e-view option="Year"></e-view>
+                <e-view option="Agenda"></e-view>
+            </e-views>
+
+            <ng-template #eventSettingsTemplate let-data>
+                <div class="cell-template">{{ data.name }}</div>
+                <!-- <div class="cell">{{ data.description }}</div>
+                <div class="cell">{{ data.finishDate }}</div> -->
+            </ng-template>
+
+            <!-- <ng-template #cellTemplate let-data>
+                <div class="cell-template" [innerHTML]="insertCellImage(data.date)"></div>
+            </ng-template> -->
+
+            <ng-template #editorTemplate let-data>
+                <table class="editor" width="100%" cellpadding="5">
+                    <tbody>
+                        <tr>
+                            <td class="e-textlabel label">⚡ Priority</td>
+                            <td colspan="4">
+                                <ejs-dropdownlist id="Priority" class="e-field" data-name="priority"
+                                    placeholder="Click me 😝" [dataSource]="priorityData" [fields]="priorityFields"
+                                    value={{data.priority}} text="{{priority(data.priority)}}"></ejs-dropdownlist>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="e-textlabel label">💬 Name</td>
+                            <td colspan="4">
+                                <input id="Name" class="e-field e-input input" type="text" value="{{ data.name }}"
+                                    data-name="name" placeholder="Task name ...">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="e-textlabel label">📃 Description</td>
+                            <td colspan="4">
+                                <input id="Description" class="e-field e-input input" type="text"
+                                    value="{{ data.description }}" data-name="description"
+                                    placeholder="Task description ...">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="e-textlabel label">⌚ Finish Date</td>
+                            <td colspan="4">
+                                <ejs-datetimepicker id="FinishDate" class="e-field input" data-name="finishDate"
+                                    format="dd/MM/yyyy HH:mm" [firstDayOfWeek]='startWeek' [value]="data.finishDate">
+                                </ejs-datetimepicker>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="e-textlabel label">🔔 Notify Me</td>
+                            <td colspan="4">
+                                <ejs-switch #bswitch id="IsNeedNotify" class="e-field input" data-name="isNeedNotify"
+                                    [checked]="data.isNeedNotify"></ejs-switch>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-template>
+        </ejs-schedule>
+
+    </mat-card-content>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-actions>
+        Actions ...
+    </mat-card-actions>
+
+</mat-card>

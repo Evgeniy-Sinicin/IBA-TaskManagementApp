@@ -39,6 +39,11 @@ import { Account } from './models/account';
 import { AddingTaskDialogComponent } from './components/adding-task-dialog/adding-task-dialog.component';
 import { UpdateTaskDialogComponent } from './components/update-task-dialog/update-task-dialog.component';
 import { DatePipe } from '@angular/common';
+import { SchedulerComponent } from './components/scheduler/scheduler.component';
+import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
+import { DateTimePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { SwitchModule } from '@syncfusion/ej2-angular-buttons';
+import { ScheduleModule, RecurrenceEditorModule, DayService, WeekService, WorkWeekService, MonthService, YearService, AgendaService, MonthAgendaService, TimelineViewsService, TimelineMonthService, DragAndDropService, ResizeService } from '@syncfusion/ej2-angular-schedule';
 
 export function tokenGetter() {
   var jsonAcc = localStorage.getItem(ACCOUNT)
@@ -80,7 +85,8 @@ export function emailGetter() {
     LoginComponent,
     SignupComponent,
     AddingTaskDialogComponent,
-    UpdateTaskDialogComponent
+    UpdateTaskDialogComponent,
+    SchedulerComponent
   ],
   imports: [
     BrowserModule,
@@ -110,6 +116,12 @@ export function emailGetter() {
     MatSelectModule,
     MatSlideToggleModule,
 
+    DropDownListModule,
+    DateTimePickerModule,
+    SwitchModule,
+    ScheduleModule,
+    RecurrenceEditorModule,
+
     JwtModule.forRoot({
       config: {
         tokenGetter,
@@ -121,7 +133,20 @@ export function emailGetter() {
     provide: WEB_API_URL,
     useValue: environment.webApi
   },
-    DatePipe],
+    DatePipe, 
+
+    DayService, 
+    WeekService, 
+    WorkWeekService, 
+    MonthService, 
+    YearService,
+    AgendaService,
+    MonthAgendaService,
+    TimelineViewsService,
+    TimelineMonthService,
+    DragAndDropService,
+    ResizeService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

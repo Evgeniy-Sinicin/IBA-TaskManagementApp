@@ -71,7 +71,7 @@ namespace TaskManagement.EmailService.EmailSenders
                 "</style>" +
                 "</head>" +
                 "<body style='margin:0;padding:0;'>" +
-                "<table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;'>" +
+                "<table role='presentation' style='border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;'>" +
                 "<tr>" +
                 "<td align='center' style='padding:0;'>" +
                 "<table role='presentation' style='width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;'>" +
@@ -158,7 +158,7 @@ namespace TaskManagement.EmailService.EmailSenders
                 "</tr>" +
                 "<tr>" +
                 "<td style='padding:20px;background:#ee4c50;'>" +
-                "<table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;'>" +
+                "<table role='presentation' style='border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;'>" +
                 "<tr>" +
                 "<td style='padding:0;width:75%;' align='left'>" +
                 "<p style='margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;'>" +

@@ -14,6 +14,8 @@ export class AppComponent {
   private _isLoginButtonClicked: boolean;
   private _isRegisterButtonClicked: boolean;
 
+  public date: number = new Date().getTime()
+
   constructor(
     private _authService: AuthService,
     private _accountService: AccountService,
@@ -22,10 +24,10 @@ export class AppComponent {
     ) { 
     this._isLoginButtonClicked = false;
     this._isRegisterButtonClicked = false;
-  }
 
-  public get date(): number {
-    return Date.now()
+    interval().subscribe(res => {
+      this.date = Date.now()
+    })
   }
 
   public get isLoggedIn(): boolean {

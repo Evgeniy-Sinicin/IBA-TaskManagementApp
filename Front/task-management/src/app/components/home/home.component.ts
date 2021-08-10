@@ -38,6 +38,12 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  clickSchedulerButton() {
+    if (this._authService.isAuthenticated()) {
+      this._router.navigate(['scheduler'])
+    }
+  }
+
   getRoleName(value: number): string {
     return Role[value]
   }

@@ -2,7 +2,6 @@ mat-card {
     top           : 10px;
     text-align    : center;
     box-shadow    : none;
-    /* opacity       : 90%; */
     display       : flex;
     flex-direction: column;
     align-items   : stretch;
@@ -53,4 +52,8 @@ mat-hint {
     width: 65%;
     margin-top: 20px;
     transform: scale(2);
+}
+
+::ng-deep .mat-step-header {
+    padding: 12px;
 }

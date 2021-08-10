@@ -30,6 +30,8 @@ import { UpdateTaskDialogComponent } from '../update-task-dialog/update-task-dia
     ])]
 })
 export class TasksComponent {
+  private _date: number = new Date().getTime()
+  private _tasks!: Task[]
 
   @ViewChild("daterange", { read: DateRangeService })
   dateRangeService!: DateRangeService;
@@ -37,8 +39,6 @@ export class TasksComponent {
     start: null as any,
     end: null as any,
   };
-
-  private _tasks!: Task[]
 
   displayedColumns: string[] = ['id', 'status', 'priority', 'name', 'description', 'userEmail', 'finishDate']
   dataSource!: MatTableDataSource<Task>
@@ -61,6 +61,10 @@ export class TasksComponent {
     interval(1000).subscribe(res => {
       this.updateNotificationStatus()
     })
+
+    interval().subscribe(res => {
+      this._date = Date.now();
+    })
   }
 
   get isEmptyTextFilter() {
@@ -81,7 +85,7 @@ export class TasksComponent {
 
   updateNotificationStatus() {
     this._tasks.forEach(t => {
-      if (t.isNeedNotify && new Date(t.finishDate).getTime() < Date.now()) {
+      if (t.isNeedNotify && new Date(t.finishDate).getTime() < this._date) {
         t.isNeedNotify = false
 
         var name = t.name.length >= 15 ? t.name.substring(0, 12) + '...' : t.name
@@ -155,7 +159,7 @@ export class TasksComponent {
   }
 
   isExpired(task: Task) {
-    if (new Date(task.finishDate).getTime() - Date.now() <= 0) {
+    if (new Date(task.finishDate).getTime() - this._date <= 0) {
       return true
     }
 
@@ -163,28 +167,30 @@ export class TasksComponent {
   }
 
   getDifference(task: Task): string {
-    var time = new Date(task.finishDate).getTime() - Date.now()
-    var days = Math.floor(time / (1000 * 60 * 60 * 24))
+    let time = new Date(task.finishDate).getTime() - this._date
+
+    let seconds = Math.floor(((time % 86400000) % 3600000) / 1000); // minutes
+    let minutes = Math.floor(((time % 86400000) % 3600000) / 60000); // minutes
+    let hours = Math.floor((time % 86400000) / 3600000); // hours
+    let days = Math.floor(time / 86400000); // days
 
     if (days < 0) {
       days++
     }
 
-    var hours = Math.floor((time - (1000 * 60 * 60 * 24 * days)) / 60 / 60 / 1000) % 24
-
     if (hours < 0) {
       hours++
     }
-
-    var minutes = Math.floor((time - (1000 * 60 * 60 * 24 * days)) / 60 / 1000) % 60
 
     if (minutes < 0) {
       minutes++
     }
 
-    var seconds = Math.floor((time - (1000 * 60 * 60 * 24 * days)) / 1000) % 60
+    if (seconds < 0) {
+      seconds++
+    }
 
-    return `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`
+    return `${days} days ${hours} hours ${minutes} minutes ${Math.ceil(seconds % 60)} seconds`
   }
 
   refreshTable() {
