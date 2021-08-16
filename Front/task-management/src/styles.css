@@ -10,13 +10,13 @@ html {
 }
 
 body {
-    height                   : 100%;
-    margin                   : 0% !important;
-    display                  : flex;
-    flex-direction           : column;
-    font-family              : Roboto, "Helvetica Neue", sans-serif;
-    background-image         : url(./images/Background.png);
-    background-size          : cover;
+    height          : 100%;
+    margin          : 0% !important;
+    display         : flex;
+    flex-direction  : column;
+    font-family     : Roboto, "Helvetica Neue", sans-serif;
+    background-image: url(./images/Background.png);
+    background-size : cover;
 }
 
 app-root {
@@ -34,7 +34,7 @@ app-root {
 }
 
 .mat-progress-bar-background {
-    fill: #00d7ff;
+    fill: #00d7ff !important;
 }
 
 .mat-sort-header-container {
@@ -49,4 +49,19 @@ app-root {
 
 .mat-paginator-container {
     min-height: 20px;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius   : 100px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius   : 100px;
+    background-image: linear-gradient(180deg, #d0368a 0%, #708ad4 99%);
+    box-shadow      : inset 2px 2px 5px 0 rgba(#fff, 0.5);
 }

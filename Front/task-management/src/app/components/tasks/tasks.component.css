@@ -112,6 +112,7 @@ kendo-daterange {
 }
 
 ::ng-deep .mat-paginator-container {
+    min-height     : auto;
     display        : flex;
     align-items    : center;
     justify-content: space-between !important;
@@ -166,12 +167,10 @@ kendo-daterange {
     hyphens     : auto;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     width      : 0;
-    /* Remove scrollbar space */
     background : transparent;
-    /* Optional: just make scrollbar invisible */
-}
+} */
 
 .example-element-symbol {
     line-height: normal;

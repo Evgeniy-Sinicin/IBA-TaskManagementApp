@@ -11,34 +11,20 @@ mat-card-title {
     flex-direction: column;
     align-items   : center;
     font-size     : 42pt;
+    margin        : 0px;
 }
 
 mat-card-content {
-    height        : 80%;
+    height        : 90%;
     width         : 100%;
     display       : flex;
     flex-direction: column;
     align-items   : center;
-    overflow-y    : scroll;
-}
-
-mat-card-actions {
-    height         : 5%;
-    width          : 100%;
-    display        : flex;
-    flex-direction : column;
-    justify-content: center;
-    align-items    : center;
 }
 
 ejs-schedule {
     overflow: auto;
 }
-
-/* .cell {
-    width: 100%;
-    text-align: center;
-} */
 
 .label {
     width: 25%;
@@ -48,8 +34,154 @@ ejs-schedule {
     width: 100%;
 }
 
-.chip {
-    display: flex;
-    flex-direction: row;
+.quick-info-header {
+    background-color: white;
+    padding         : 8px 18px;
+}
+
+.quick-info-header-content {
+    display        : flex;
+    flex-direction : column;
+    justify-content: flex-end;
+    padding        : 5px 10px 5px;
+}
+
+.quick-info-content {
+    overflow-y: auto;
+    /* overflow-x: hidden; */
+}
+
+.quick-info-title {
+    font-weight   : 500;
+    font-size     : 16px;
+    letter-spacing: 0.48px;
+    height        : 22px;
+}
+
+.duration-text {
+    font-size     : 11px;
+    letter-spacing: 0.33px;
+    height        : 14px;
+}
+
+.content-area {
+    margin : 0;
+    padding: 10px 0px;
+    width  : 100%;
+}
+
+.event-content {
+    height         : 90px;
+    display        : flex;
+    flex-direction : column;
     justify-content: center;
+    padding        : 0 15px;
+}
+
+.meeting-type-wrap,
+.meeting-subject-wrap,
+.notes-wrap {
+    font-size     : 11px;
+    color         : #666;
+    letter-spacing: 0.33px;
+    height        : 24px;
+    padding       : 5px;
+}
+
+.event-content div label {
+    display  : inline-block;
+    min-width: 45px;
+    color    : #666;
+}
+
+.event-content div span {
+    font-size     : 11px;
+    color         : #151515;
+    letter-spacing: 0.33px;
+    line-height   : 14px;
+    padding-left  : 8px;
+}
+
+.cell-footer .e-btn {
+    background-color: #ffffff;
+    border-color    : #878787;
+    color           : #878787;
+}
+
+.cell-footer {
+    padding-top: 10px;
+}
+
+.e-quick-popup-wrapper .e-cell-popup .e-popup-content {
+    padding: 0 14px;
+}
+
+::ng-deep .e-quick-popup-wrapper .e-event-popup .e-popup-footer {
+    display: block !important;
+}
+
+.e-quick-popup-wrapper .e-popup-footer button:first-child {
+    margin-right: 5px;
+}
+
+::ng-deep .schedule-cell-dimension.e-schedule .e-month-view .e-work-cells {
+    height: 10.75vh !important;
+}
+
+::ng-deep .usual {
+    background: linear-gradient(90deg, skyblue, deepskyblue) !important;
+}
+
+::ng-deep .important {
+    background: linear-gradient(90deg, gold, orange) !important;
+}
+
+::ng-deep .critical {
+    background: linear-gradient(90deg, palevioletred, rgba(255, 0, 150, 0.5)) !important;
+}
+
+::ng-deep .e-schedule .e-month-view .e-appointment,
+::ng-deep .e-schedule .e-vertical-view .e-all-day-appointment-wrapper .e-appointment,
+::ng-deep .e-schedule .e-vertical-view .e-day-wrapper .e-appointment {
+    color: black !important;
+}
+
+::ng-deep .tooltip-wrapper {
+    display              : flex;
+    flex-direction       : row;
+}
+
+::ng-deep .tooltip-image-priority-0,
+::ng-deep .tooltip-image-priority-1,
+::ng-deep .tooltip-image-priority-2 {
+    display            : flex;
+    background-position: center center;
+    background-repeat  : no-repeat;
+    background-size    : cover;
+    min-width          : 128px;
+    width              : 128px;
+    height             : 128px;
+}
+
+::ng-deep .tooltip-image-priority-0 {
+    background-image: url('src\images\usual.png');
+}
+
+::ng-deep .tooltip-image-priority-1 {
+    background-image: url('src\images\important.png');
+}
+
+::ng-deep .tooltip-image-priority-2 {
+    background-image: url('src\images\critical.png');
+}
+
+::ng-deep .tooltip-content {
+    height           : 100%;
+    display          : flex;
+    flex-direction   : column;
+    margin-left      : 6px;
+}
+
+::ng-deep .tooltip-field {
+    hyphens: auto;
 }

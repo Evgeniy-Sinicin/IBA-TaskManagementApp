@@ -56,4 +56,15 @@ export class HomeComponent implements OnInit {
     this._router.navigate(['signup'])
   }
 
+  clickAdminPanelButton() {
+    this._router.navigate(['admin-panel'])
+  }
+
+  isAdmin(): boolean {
+    this.user.roles.forEach(r => {
+      console.log(r)
+    })
+
+    return true
+  }
 }

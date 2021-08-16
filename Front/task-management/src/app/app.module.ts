@@ -24,12 +24,15 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { HomeComponent } from './components/home/home.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { WEB_API_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
+import { ChartsModule, WavesModule, MDBBootstrapModule } from 'angular-bootstrap-md'
 
 import { JwtModule } from '@auth0/angular-jwt'
 import { ACCOUNT } from './services/auth.service';
@@ -43,7 +46,10 @@ import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 import { DateTimePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { SwitchModule } from '@syncfusion/ej2-angular-buttons';
-import { ScheduleModule, RecurrenceEditorModule, DayService, WeekService, WorkWeekService, MonthService, YearService, AgendaService, MonthAgendaService, TimelineViewsService, TimelineMonthService, DragAndDropService, ResizeService } from '@syncfusion/ej2-angular-schedule';
+import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
+import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
+import { ScheduleModule, RecurrenceEditorModule, DayService, WeekService, WorkWeekService, MonthService, YearService, AgendaService, MonthAgendaService, DragAndDropService, ResizeService } from '@syncfusion/ej2-angular-schedule';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 export function tokenGetter() {
   var jsonAcc = localStorage.getItem(ACCOUNT)
@@ -86,7 +92,8 @@ export function emailGetter() {
     SignupComponent,
     AddingTaskDialogComponent,
     UpdateTaskDialogComponent,
-    SchedulerComponent
+    SchedulerComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -115,12 +122,19 @@ export function emailGetter() {
     MatDialogModule,
     MatSelectModule,
     MatSlideToggleModule,
+    MatTabsModule,
 
     DropDownListModule,
     DateTimePickerModule,
     SwitchModule,
     ScheduleModule,
     RecurrenceEditorModule,
+    TextBoxModule,
+    ButtonModule,
+
+    ChartsModule, 
+    WavesModule,
+    MDBBootstrapModule.forRoot(),
 
     JwtModule.forRoot({
       config: {
@@ -142,8 +156,6 @@ export function emailGetter() {
     YearService,
     AgendaService,
     MonthAgendaService,
-    TimelineViewsService,
-    TimelineMonthService,
     DragAndDropService,
     ResizeService
   ],

@@ -1,5 +1,5 @@
 <mat-card *ngIf="!user || !isLoggedIn">
-    <mat-card-title>Hello 🖐</mat-card-title>
+    <mat-card-title>🦝 Hello 🖐</mat-card-title>
     <mat-card-content>
         <p>
             You have arrived at the main page of Task Management Application. <br />
@@ -31,6 +31,11 @@
         <button class="menu-button" (click)="clickSchedulerButton()" mat-raised-button>
             Scheduler
             <mat-icon>today</mat-icon>
+        </button>
+
+        <button class="menu-button" (click)="clickAdminPanelButton()" *ngIf="user.roles.includes(1)" mat-raised-button>
+            Admin Panel
+            <mat-icon>admin_panel_settings</mat-icon>
         </button>
     </mat-card-actions>
     <mat-divider></mat-divider>

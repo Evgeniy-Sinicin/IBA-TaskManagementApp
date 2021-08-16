@@ -27,6 +27,14 @@ namespace TaskManagement.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
+        [Route("all")]
+        public IActionResult GetAllTasks()
+        {
+            return Ok(_mapper.Map<List<Task>>(_service.GetAll()).ToList());
+        }
+
+        [HttpGet]
         [Authorize]
         [Route("")]
         public IActionResult GetTasks()

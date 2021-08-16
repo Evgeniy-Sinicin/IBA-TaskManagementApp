@@ -169,10 +169,10 @@ export class TasksComponent {
   getDifference(task: Task): string {
     let time = new Date(task.finishDate).getTime() - this._date
 
-    let seconds = Math.floor(((time % 86400000) % 3600000) / 1000); // minutes
-    let minutes = Math.floor(((time % 86400000) % 3600000) / 60000); // minutes
-    let hours = Math.floor((time % 86400000) / 3600000); // hours
-    let days = Math.floor(time / 86400000); // days
+    let seconds = Math.floor(((time % 86400000) % 3600000) / 1000);
+    let minutes = Math.floor(((time % 86400000) % 3600000) / 60000);
+    let hours = Math.floor((time % 86400000) / 3600000);
+    let days = Math.floor(time / 86400000);
 
     if (days < 0) {
       days++

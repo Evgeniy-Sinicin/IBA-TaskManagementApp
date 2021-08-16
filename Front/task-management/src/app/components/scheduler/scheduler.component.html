@@ -6,9 +6,101 @@
 
     <mat-card-content>
 
-        <ejs-schedule #scheduleObj id="schedule" [views]="views" [selectedDate]="date" [eventSettings]="eventSettings"
-            [firstDayOfWeek]="1" (dragStop)="onDragStop($event)" (resizeStop)="onResizeStop($event)"
-            (actionComplete)="onActionComplete($event)" [(currentView)]="view">
+        <ejs-schedule #scheduleObj id="schedule" cssClass='schedule-cell-dimension' [views]="views"
+            [selectedDate]="date" [eventSettings]="eventSettings" [firstDayOfWeek]="1" (dragStop)="onDragStop($event)"
+            (resizeStop)="onResizeStop($event)" (actionComplete)="onActionComplete($event)" (eventRendered)="onRenderTask($event)"
+            [(currentView)]="view">
+
+            <!-- Header template -->
+            <ng-template #quickInfoTemplatesHeader let-data>
+                <div class="quick-info-header">
+                    <div class="quick-info-header-content" [ngStyle]="getHeaderStyles(data)">
+                        <div class="quick-info-title">Task Details 🧱</div>
+                        <div class="duration-text">{{getHeaderDetails(data)}} ⌚</div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <!-- Content Template -->
+            <ng-template #quickInfoTemplatesContent let-data>
+                <ng-container [ngTemplateOutlet]="data.elementType == 'cell' ? cellContent : eventContent"
+                    [ngTemplateOutletContext]="{data:data}">
+                </ng-container>
+            </ng-template>
+
+            <ng-template #cellContent let-data="data">
+                <div class="quick-info-content">
+                    <div class="e-cell-content">
+                        <div class="content-area">
+                            <ejs-dropdownlist id='eventType' #eventTypeObj [dataSource]='priorityData'
+                                [fields]='priorityFields' placeholder='Click Me 😜' index="{{0}}" popupHeight="200px">
+                            </ejs-dropdownlist>
+                        </div>
+
+                        <div class="content-area">
+                            <ejs-textbox #titleObj id="title" placeholder="💬 Name"></ejs-textbox>
+                        </div>
+
+                        <div class="content-area">
+                            <ejs-textbox #notesObj id="notes" placeholder="📃 Description"></ejs-textbox>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template #eventContent let-data="data">
+                <div class="quick-info-content">
+                    <div class="event-content">
+                        <div class="meeting-subject-wrap">
+                            <label>⚡ Priority</label>:
+                            <span>{{priority(data.priority)}}</span>
+                        </div>
+
+                        <div class="meeting-type-wrap">
+                            <label>💬 Name</label>:
+                            <span>{{data.name}}</span>
+                        </div>
+
+                        <div class="notes-wrap">
+                            <label>📃 Description</label>:
+                            <span>{{data.description}}</span>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <!-- Footer Template -->
+            <ng-template #quickInfoTemplatesFooter let-data>
+                <ng-container [ngTemplateOutlet]="data.elementType == 'cell' ? cellFooter : eventFooter"
+                    [ngTemplateOutletContext]="{data:data}">
+                </ng-container>
+            </ng-template>
+
+            <ng-template #cellFooter let-data="data">
+                <div class="e-cell-footer">
+                    <button ejs-button id="add" cssClass="e-flat" [isPrimary]="true"
+                        (click)="buttonClickActions($event)">
+                        Add ✔
+                    </button>
+                    <button ejs-button id="more-details" cssClass="e-flat" (click)="buttonClickActions($event)">
+                        More Details 🔨
+                    </button>
+                </div>
+            </ng-template>
+
+            <ng-template #eventFooter let-data="data">
+                <div class="e-event-footer">
+                    <button ejs-button id="more-details" cssClass="e-flat" [isPrimary]="true"
+                        (click)="buttonClickActions($event)">
+                        More Details 🔨
+                    </button>
+                    <button ejs-button id="delete" cssClass="e-flat"
+                        (click)="buttonClickActions($event)">
+                        Delete 🔥
+                    </button>
+                </div>
+            </ng-template>
+
             <e-views>
                 <e-view option="Day"></e-view>
                 <e-view option="Week"></e-view>
@@ -16,16 +108,6 @@
                 <e-view option="Year"></e-view>
                 <e-view option="Agenda"></e-view>
             </e-views>
-
-            <ng-template #eventSettingsTemplate let-data>
-                <div class="cell-template">{{ data.name }}</div>
-                <!-- <div class="cell">{{ data.description }}</div>
-                <div class="cell">{{ data.finishDate }}</div> -->
-            </ng-template>
-
-            <!-- <ng-template #cellTemplate let-data>
-                <div class="cell-template" [innerHTML]="insertCellImage(data.date)"></div>
-            </ng-template> -->
 
             <ng-template #editorTemplate let-data>
                 <table class="editor" width="100%" cellpadding="5">
@@ -78,11 +160,5 @@
         </ejs-schedule>
 
     </mat-card-content>
-
-    <mat-divider></mat-divider>
-
-    <mat-card-actions>
-        Actions ...
-    </mat-card-actions>
 
 </mat-card>

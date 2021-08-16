@@ -1,0 +1,125 @@
+<mat-card>
+
+    <mat-card-title>🐱‍👤 Admin Panel 📊</mat-card-title>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+
+        <mat-tab-group mat-align-tabs="center">
+
+            <mat-tab label="Statistics">
+
+                <ng-template mat-tab-label>
+
+                    <p>Statistics</p>
+                    <mat-icon>query_stats</mat-icon>
+
+                </ng-template>
+                <div class="dropdown-input">
+
+                    <mat-form-field  appearance="fill">
+
+                        <mat-label>Users</mat-label>
+
+                        <mat-select [(value)]="selectedUserEmail">
+
+                            <mat-option>All</mat-option>
+                            <mat-option *ngFor="let email of emails" [value]="email">{{email}}</mat-option>
+
+                        </mat-select>
+
+                    </mat-form-field>
+
+                </div>
+                <div class="charts">
+
+                    <div class="accounts-chart">
+
+                        <canvas mdbChart chartType="horizontalBar" [datasets]="accountsChartDatasets"
+                            [labels]="accountsChartLabels" [colors]="accountsChartColors" [options]="chartOptions"
+                            [legend]="true">
+                        </canvas>
+
+                    </div>
+                    <div class="tasks-chart">
+
+                        <canvas mdbChart chartType="pie" [datasets]="tasksChartDatasets"
+                            [labels]="tasksChartLabels" [colors]="tasksChartColors" [options]="chartOptions"
+                            [legend]="true">
+                        </canvas>
+
+                    </div>
+                    <div class="dates-chart">
+
+                        <div class="date-nav">
+
+                            <button mat-button (click)="changeMonth(-1)">◀</button>
+                            <button id="month-button" mat-button (click)="changeMonth(0)">
+                                {{date.toLocaleString('default', { month:
+                                'long' })}} {{date.getFullYear()}} </button>
+                            <button mat-button (click)="changeMonth(1)">▶</button>
+
+                        </div>
+
+                        <canvas mdbChart chartType="line" [datasets]="datesChartDatasets" [labels]="datesChartLabels"
+                            [colors]="datesChartColors" [options]="chartOptions" [legend]="true">
+                        </canvas>
+
+                    </div>
+
+                </div>
+                <div id="back-charts" class="charts">
+
+                    <div class="average-time-chart">
+
+                        <p>Average task duration time (in hours)</p>
+
+                        <canvas mdbChart chartType="doughnut" [datasets]="averageTasksDurationChartDatasets"
+                            [labels]="averageTasksDurationChartLabels" [colors]="averageTasksDurationChartColors" [options]="chartOptions"
+                            [legend]="true">
+                        </canvas>
+
+                    </div>
+                    <div class="average-count-chart">
+
+                        <!-- <p>Average count of tasks by priority</p> -->
+
+                        <canvas mdbChart chartType="bar" [datasets]="averageTasksChartDatasets"
+                            [labels]="averageTasksChartLabels" [colors]="averageTasksChartColors" [options]="chartOptions"
+                            [legend]="true">
+                        </canvas>
+
+                    </div>
+                    <div class="average-time-chart">
+
+                        <p>Average time of overdue tasks (in hours)</p>
+
+                        <canvas mdbChart chartType="doughnut" [datasets]="averageTasksOverdueChartDatasets"
+                            [labels]="averageTasksDurationChartLabels" [colors]="averageTasksDurationChartColors" [options]="chartOptions"
+                            [legend]="true">
+                        </canvas>
+
+                    </div>
+
+                </div>
+
+            </mat-tab>
+            <mat-tab label="Accounts">
+
+                <ng-template mat-tab-label>
+
+                    <p>Accounts</p>
+                    <mat-icon>people</mat-icon>
+
+                </ng-template>
+
+                <p>2 admin-panel works!</p>
+
+            </mat-tab>
+
+        </mat-tab-group>
+
+    </mat-card-content>
+
+</mat-card>
