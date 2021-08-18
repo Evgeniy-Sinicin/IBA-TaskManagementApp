@@ -464,9 +464,9 @@ export class AdminPanelComponent implements OnInit {
 
     this.averageTasksChartDatasets = [{
       data: [
-        usualTasksCount / usualTasksUsers.size,
-        importantTasksCount / importantTasksUsers.size,
-        criticalTasksCount / criticalTasksUsers.size,
+        (usualTasksCount / usualTasksUsers.size).toFixed(2),
+        (importantTasksCount / importantTasksUsers.size).toFixed(2),
+        (criticalTasksCount / criticalTasksUsers.size).toFixed(2),
         0,
         usualTasksCount / usualTasksUsers.size + importantTasksCount / importantTasksUsers.size + criticalTasksCount / criticalTasksUsers.size
       ],
