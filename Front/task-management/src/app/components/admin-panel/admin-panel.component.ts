@@ -1,13 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TaskService } from 'src/app/services/task.service';
 import { Task } from 'src/app/models/task'
 import { AccountService } from 'src/app/services/account.service';
-import { Account } from 'src/app/models/account';
+import { Account, Role } from 'src/app/models/account';
+import { MatTableDataSource } from '@angular/material/table';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { ThemePalette } from '@angular/material/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { emailGetter } from 'src/app/app.module';
+import { AuthService } from 'src/app/services/auth.service';
+
+export class AccountsTableCell {
+  id: number
+  email: string
+  phone: string
+  tasks: number
+  usual: number
+  important: number
+  critical: number
+  isAdmin: boolean
+  isBlocked: boolean
+}
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
-  styleUrls: ['./admin-panel.component.css']
+  styleUrls: ['./admin-panel.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed, void',
+        style({ height: '0px' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> void',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+    ])]
 })
 export class AdminPanelComponent implements OnInit {
 
@@ -16,8 +46,19 @@ export class AdminPanelComponent implements OnInit {
   private _accounts: Account[] = []
 
   adminCount: number = 0
+  blockedCount: number = 0
   emails: string[] = []
   date: Date = new Date()
+
+  isLoading: boolean = false
+  accountFilter: string = ''
+  accountsTableColumns: string[] = ['id', 'email', 'phone', 'tasks', 'usual', 'important', 'critical', 'admin', 'blocked']
+  expandedAccount!: Account
+  accountsTableDataSource: MatTableDataSource<AccountsTableCell>
+  adminToggleButtonColor: ThemePalette = 'primary'
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   accountsChartDatasets: Array<any> = [{
     data: [],
@@ -25,17 +66,20 @@ export class AdminPanelComponent implements OnInit {
 
   accountsChartLabels: Array<any> = [
     'Users Count',
-    'Admins Count'
+    'Admins Count',
+    'Blocked Count'
   ]
 
   accountsChartColors: Array<any> = [
     {
       backgroundColor: [
         'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
         'rgba(255, 99, 132, 0.2)',
       ],
       borderColor: [
         'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
         'rgba(255,99,132,1)',
       ],
       borderWidth: 2,
@@ -69,8 +113,8 @@ export class AdminPanelComponent implements OnInit {
   ]
 
   datesChartDatasets: Array<any> = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'My Second dataset' }
+    { data: [], label: '' },
+    { data: [], label: '' }
   ];
 
   datesChartLabels: Array<any> = [...Array(32 - new Date(this.date.getFullYear(), this.date.getMonth(), 32).getDate())].map((e, i) => i + 1)
@@ -97,7 +141,7 @@ export class AdminPanelComponent implements OnInit {
   ];
 
   averageTasksChartDatasets: Array<any> = [{
-    data: [3, 2, 1, 0],
+    data: [],
   }]
 
   averageTasksChartLabels: Array<any> = [
@@ -173,12 +217,18 @@ export class AdminPanelComponent implements OnInit {
   constructor(
     private _accountService: AccountService,
     private _taskService: TaskService,
+    private _authService: AuthService,
+    private _snackBar: MatSnackBar,
   ) {
 
   }
 
   ngOnInit(): void {
-    this._taskService.getAllTasks().subscribe(tasks => {
+    this.init()
+  }
+
+  async init() {
+    await this._taskService.getAllTasks().subscribe(tasks => {
       this._tasks = tasks
       this.updateTasksChart(tasks)
       this.updateDatesChart(tasks)
@@ -187,26 +237,141 @@ export class AdminPanelComponent implements OnInit {
       this.updateAverageTasksOverdueChart(tasks)
     })
 
-    this._accountService.getAccounts().subscribe(accounts => {
-      this._accounts = accounts
-      this.emails = accounts.map(a => a.email).sort()
-
-      accounts.forEach(a => {
-        if (a.roles.includes(1)) {
-          this.adminCount++
-        }
-      })
-
-      this.accountsChartDatasets = [{
-        data: [
-          this.accounts.length - this.adminCount,
-          this.adminCount,
-          0,
-          this.accounts.length
-        ],
-        label: 'Accounts Count: ' + this.accounts.length
-      }]
+    await this._accountService.getAccounts().subscribe(accounts => {
+      this.updateAccountsChart(accounts)
+      this.refreshAccountsTable()
     })
+  }
+
+  changeRole(atc: AccountsTableCell) {
+    if (atc.isBlocked) {
+      return
+    }
+
+    this.isLoading = true
+
+    let account = this._accounts.filter(a => a.id == atc.id)[0]
+    let roles = account.roles
+
+    if (roles.includes(Role.Admin)) {
+      roles = roles.filter(r => r != Role.Admin)
+    } else {
+      roles.push(Role.Admin)
+    }
+
+    account.roles = roles
+
+    this._accountService.updateAccount(account).subscribe(res => {
+      this.isLoading = false
+
+      if (roles.includes(Role.Admin)) {
+        atc.isAdmin = true
+        this._snackBar.open('Account has received Admin rights ✔ 🥳 🎈', undefined, { duration: 3000, verticalPosition: 'top' })
+      } else {
+        atc.isAdmin = false
+        this._snackBar.open('Account has lost Admin rights ✔ 🥳 🎈', undefined, { duration: 3000, verticalPosition: 'top' })
+      }
+
+      if (account.email == emailGetter()) {
+        this._authService.logout()
+      } else {
+        this.updateAccountsChart(this._accounts.filter(a => {
+          if (a.id == account.id) {
+            a.roles = roles
+          }
+
+          return a
+        }))
+      }
+
+    }, err => {
+      this.isLoading = false
+      this._snackBar.open('Role changing is failed! 😢', undefined, { duration: 3000, verticalPosition: 'top' })
+      console.log('Error: Role changing is failed! 😥 👇', err)
+    })
+  }
+
+  changeBlockStatus(atc: AccountsTableCell) {
+    this.isLoading = true
+
+    let account = this._accounts.filter(a => a.id == atc.id)[0]
+    let roles = account.roles
+
+    if (roles.length != 0) {
+      roles = []
+    } else {
+      roles.push(Role.User)
+    }
+
+    account.roles = roles
+
+    this._accountService.updateAccount(account).subscribe(res => {
+      this.isLoading = false
+
+      if (roles.includes(Role.User)) {
+        atc.isBlocked = false
+        this._snackBar.open('Account has received User rights ✔ 🥳 🎈', undefined, { duration: 3000, verticalPosition: 'top' })
+      } else {
+        atc.isAdmin = false
+        atc.isBlocked = true
+        this._snackBar.open('Account is blocked ✔ 🥳 🎈', undefined, { duration: 3000, verticalPosition: 'top' })
+      }
+
+      if (account.email == emailGetter()) {
+        this._authService.logout()
+      } else {
+        this.updateAccountsChart(this._accounts.filter(a => {
+          if (a.id == account.id) {
+            a.roles = roles
+          }
+
+          return a
+        }))
+      }
+    }, err => {
+      this.isLoading = false
+      this._snackBar.open('Account blocking is failed! 😢', undefined, { duration: 3000, verticalPosition: 'top' })
+      console.log('Error: Account blocking is failed! 😥 👇', err)
+    })
+  }
+
+  refreshAccountsTable() {
+    this.isLoading = true
+
+    this.accountsTableDataSource = new MatTableDataSource(this.accounts.map(a => {
+      return {
+        id: a.id,
+        email: a.email,
+        phone: a.phone,
+        tasks: this.getTasks(a.email).length,
+        usual: this.getTasks(a.email, 0).length,
+        important: this.getTasks(a.email, 1).length,
+        critical: this.getTasks(a.email, 2).length,
+        isAdmin: a.roles.includes(Role.Admin),
+        isBlocked: a.roles.length == 0 ? true : false
+      }
+    }))
+
+    this.accountsTableDataSource.paginator = this.paginator
+    this.accountsTableDataSource.sort = this.sort
+    this.isLoading = false
+  }
+
+  applyAccountFilter(event: Event) {
+    this.accountFilter = (event.target as HTMLInputElement).value
+    this.accountsTableDataSource.filter = this.accountFilter.trim().toLowerCase()
+
+    if (this.accountsTableDataSource.paginator) {
+      this.accountsTableDataSource.paginator.firstPage()
+    }
+  }
+
+  getTasks(email: string, priority: number = -1) {
+    if (priority == -1) {
+      return this._tasks.filter(t => t.userEmail == email)
+    }
+
+    return this._tasks.filter(t => t.userEmail == email && t.priority == priority)
   }
 
   changeMonth(delta: number) {
@@ -306,6 +471,33 @@ export class AdminPanelComponent implements OnInit {
         usualTasksCount / usualTasksUsers.size + importantTasksCount / importantTasksUsers.size + criticalTasksCount / criticalTasksUsers.size
       ],
       label: 'Average count of tasks by priority (all users)'
+    }]
+  }
+
+  updateAccountsChart(accounts: Account[]) {
+    this._accounts = accounts
+    this.emails = accounts.map(a => a.email).sort()
+
+    this.blockedCount = 0
+    this.adminCount = 0
+
+    accounts.forEach(a => {
+      if (a.roles.length == 0) {
+        this.blockedCount++
+      } else if (a.roles.includes(1)) {
+        this.adminCount++
+      }
+    })
+
+    this.accountsChartDatasets = [{
+      data: [
+        this.accounts.length - this.adminCount - this.blockedCount,
+        this.adminCount,
+        this.blockedCount,
+        0,
+        this.accounts.length
+      ],
+      label: 'Accounts Count: ' + this.accounts.length
     }]
   }
 

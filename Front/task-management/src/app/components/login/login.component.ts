@@ -40,10 +40,17 @@ export class LoginComponent implements OnInit {
     this._authService.login(
       this.loginFormGroup.controls.emailCtrl.value,
       this.loginFormGroup.controls.passwordCtrl.value)
-      .subscribe(res => {
+      .subscribe(account => {
         this.isLoading = false
-        this._router.navigate(['/'])
-        this._snackBar.open('Authorization is successful ✔ 🥳 🎈', undefined, { duration: 3000, verticalPosition: 'top' })
+
+        if (account.roles.length != 0) {
+          this._router.navigate(['/'])
+          this._snackBar.open('Authorization is successful ✔ 🥳 🎈', undefined, { duration: 3000, verticalPosition: 'top' })
+        } else {
+          this._authService.logout()
+          this._snackBar.open('Your account is blocked ⛔', undefined, { duration: 3000, verticalPosition: 'top' })
+        }
+        
       }, error => {
         this.isLoading = false
         this.loginFormGroup.reset()

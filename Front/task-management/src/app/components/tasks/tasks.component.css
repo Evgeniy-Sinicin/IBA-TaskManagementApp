@@ -25,11 +25,6 @@ td.mat-footer-cell {
     text-align: center;
 }
 
-mat-progress-bar {
-    margin-top: 3px;
-    transform : scale(2);
-}
-
 button,
 p,
 b,
@@ -40,6 +35,11 @@ label,
 mat-label,
 input {
     font-size: 21pt;
+}
+
+mat-progress-bar {
+    margin-top: 3px;
+    transform : scale(2);
 }
 
 ::ng-deep .mat-form-field-wrapper {
@@ -140,7 +140,7 @@ kendo-daterange {
 }
 
 .example-element-detail {
-    overflow: auto;
+    overflow: hidden;
 }
 
 .example-element-detail-content {

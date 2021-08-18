@@ -1,8 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Token } from '@angular/compiler/src/ml_parser/lexer';
 import { Inject, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { WEB_API_URL } from '../app-injection-tokens';
 import { Account } from '../models/account';
@@ -28,5 +25,9 @@ export class AccountService {
   
   getAccounts() {
     return this._http.get<Account[]>(`${this._apiUrl}api/auth/users`)
+  }
+
+  updateAccount(account: Account): Observable<Account> {
+    return this._http.post<Account>(`${this._apiUrl}api/auth/users`, account)
   }
 }

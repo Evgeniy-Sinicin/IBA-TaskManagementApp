@@ -119,7 +119,8 @@
                                 </div>
                             </div>
                             <div class="detail-row-action">
-                                <button *ngIf="!row.isNeedNotify" (click)="changeNotificationStatus(row)" [disabled]="isExpired(row)" value="" mat-button>
+                                <button *ngIf="!row.isNeedNotify" (click)="changeNotificationStatus(row)"
+                                    [disabled]="isExpired(row)" value="" mat-button>
                                     {{isExpired(row) ? unsubscribeButtonText : subscribeButtonText}}
                                 </button>
                                 <button *ngIf="row.isNeedNotify" (click)="changeNotificationStatus(row)" mat-button>

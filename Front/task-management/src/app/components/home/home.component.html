@@ -44,7 +44,8 @@
         <p><b>Phone 📱:</b> {{user.phone}}</p>
         <p><b>Email 📪:</b> {{user.email}}</p>
         <p>
-            <b>Roles 🎭: </b> <span *ngFor="let r of user.roles">{{getRoleName(r)}} </span>
+            <b>Roles 🎭: </b>
+            <span *ngFor="let r of user.roles">{{getRoleName(r)}} </span>
         </p>
     </mat-card-content>
 </mat-card>

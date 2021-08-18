@@ -18,7 +18,7 @@
                 </ng-template>
                 <div class="dropdown-input">
 
-                    <mat-form-field  appearance="fill">
+                    <mat-form-field appearance="fill">
 
                         <mat-label>Users</mat-label>
 
@@ -44,9 +44,8 @@
                     </div>
                     <div class="tasks-chart">
 
-                        <canvas mdbChart chartType="pie" [datasets]="tasksChartDatasets"
-                            [labels]="tasksChartLabels" [colors]="tasksChartColors" [options]="chartOptions"
-                            [legend]="true">
+                        <canvas mdbChart chartType="pie" [datasets]="tasksChartDatasets" [labels]="tasksChartLabels"
+                            [colors]="tasksChartColors" [options]="chartOptions" [legend]="true">
                         </canvas>
 
                     </div>
@@ -76,18 +75,16 @@
                         <p>Average task duration time (in hours)</p>
 
                         <canvas mdbChart chartType="doughnut" [datasets]="averageTasksDurationChartDatasets"
-                            [labels]="averageTasksDurationChartLabels" [colors]="averageTasksDurationChartColors" [options]="chartOptions"
-                            [legend]="true">
+                            [labels]="averageTasksDurationChartLabels" [colors]="averageTasksDurationChartColors"
+                            [options]="chartOptions" [legend]="true">
                         </canvas>
 
                     </div>
                     <div class="average-count-chart">
 
-                        <!-- <p>Average count of tasks by priority</p> -->
-
                         <canvas mdbChart chartType="bar" [datasets]="averageTasksChartDatasets"
-                            [labels]="averageTasksChartLabels" [colors]="averageTasksChartColors" [options]="chartOptions"
-                            [legend]="true">
+                            [labels]="averageTasksChartLabels" [colors]="averageTasksChartColors"
+                            [options]="chartOptions" [legend]="true">
                         </canvas>
 
                     </div>
@@ -96,8 +93,8 @@
                         <p>Average time of overdue tasks (in hours)</p>
 
                         <canvas mdbChart chartType="doughnut" [datasets]="averageTasksOverdueChartDatasets"
-                            [labels]="averageTasksDurationChartLabels" [colors]="averageTasksDurationChartColors" [options]="chartOptions"
-                            [legend]="true">
+                            [labels]="averageTasksDurationChartLabels" [colors]="averageTasksDurationChartColors"
+                            [options]="chartOptions" [legend]="true">
                         </canvas>
 
                     </div>
@@ -108,13 +105,99 @@
             <mat-tab label="Accounts">
 
                 <ng-template mat-tab-label>
-
                     <p>Accounts</p>
                     <mat-icon>people</mat-icon>
-
                 </ng-template>
 
-                <p>2 admin-panel works!</p>
+                <div class="accounts-block">
+
+                    <mat-form-field class="account-filter" appearance="standard">
+                        <mat-label>Filter</mat-label>
+                        <input [value]="accountFilter" matInput placeholder="user@email.com" maxlength="50"
+                            (keyup)="applyAccountFilter($event)" #input>
+                    </mat-form-field>
+
+                    <mat-progress-bar [style.visibility]="isLoading ? 'visible' : 'hidden'" mode="buffer">
+                    </mat-progress-bar>
+
+                    <table mat-table [dataSource]="accountsTableDataSource" matSort multiTemplateDataRows>
+
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header hidden> ID </th>
+                            <td mat-cell *matCellDef="let row" class="truncate-cell" hidden>{{row.id}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="email">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> 📪 Email </th>
+                            <td mat-cell *matCellDef="let row" class="truncate-cell">{{row.email}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="phone">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> 📱 Phone </th>
+                            <td mat-cell *matCellDef="let row" class="truncate-cell">{{row.phone}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="tasks">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> 📜 Tasks </th>
+                            <td mat-cell *matCellDef="let row" class="truncate-cell">{{row.tasks}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="usual">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> ⚠ Usual </th>
+                            <td mat-cell *matCellDef="let row" class="truncate-cell">{{row.usual}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="important">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <span class="yellow">⚠ </span>&nbsp;Important
+                            </th>
+                            <td mat-cell *matCellDef="let row" class="truncate-cell">{{row.important}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="critical">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <span class="red">⚠</span>&nbsp;Critical
+                            </th>
+                            <td mat-cell *matCellDef="let row" class="truncate-cell">{{row.critical}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="admin">
+                            <th mat-header-cell *matHeaderCellDef> 😎 Admin </th>
+                            <td mat-cell *matCellDef="let row" class="truncate-cell">
+                                <mat-slide-toggle [color]="adminToggleButtonColor" [checked]="row.isAdmin"
+                                    [disabled]="row.isBlocked" (click)="changeRole(row)">
+                                </mat-slide-toggle>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="blocked">
+                            <th mat-header-cell *matHeaderCellDef> ⛔ Blocked </th>
+                            <td mat-cell *matCellDef="let row" class="truncate-cell">
+                                <mat-slide-toggle [checked]="row.isBlocked" (click)="changeBlockStatus(row)">
+                                </mat-slide-toggle>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="accountsTableColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: accountsTableColumns;" class="example-element-row"
+                            [class.example-expanded-row]="expandedAccount === row"
+                            (click)="expandedAccount = expandedAccount === row ? null : row"></tr>
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                        </tr>
+
+                    </table>
+
+                    <mat-paginator [pageSizeOptions]="[10]"></mat-paginator>
+
+                    <button class="accountsTableButton" mat-button (click)="refreshAccountsTable()">
+                        <mat-icon>refresh</mat-icon>
+                    </button>
+
+                </div>
 
             </mat-tab>
 
