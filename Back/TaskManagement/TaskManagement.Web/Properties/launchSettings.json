@@ -12,6 +12,7 @@
       "commandName": "IISExpress",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
+        "connectionString": "mongodb+srv://catpuff13337:catpuff13337@cluster0.remjo.mongodb.net/TaskManagementDB?retryWrites=true&w=majority",
         "databaseName": "TaskManagementDB",
         "accountCollectionName": "Accounts",
         "taskCollectionName": "Tasks"
@@ -22,6 +23,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
+        "connectionString": "mongodb+srv://catpuff13337:catpuff13337@cluster0.remjo.mongodb.net/TaskManagementDB?retryWrites=true&w=majority",
         "databaseName": "TaskManagementDB",
         "accountCollectionName": "Accounts",
         "taskCollectionName": "Tasks"
